@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SOAP-ENV:Header>
+        <SOAP-SEC:Signature xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12">
+            <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:SignedInfo>
+                    <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+                    <ds:Reference URI="#Body">
+                        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <ds:DigestValue>NlWohPQguzFqE/BQhj8koxcC21Q=</ds:DigestValue>
+                    </ds:Reference>
+                    <ds:SignatureValue>MC0CFEvEna6kYy62+xylABKAnxB7Di70AhUApt5rRCc1UpbBxsuXARSFH1OZ97s=
+                    </ds:SignatureValue>
+                </ds:SignedInfo>
+            </ds:Signature>
+        </SOAP-SEC:Signature>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12" SOAP-SEC:id="Body">
+        <rf_declaratie_looncomponent_result xmlns="urn:EfWebservice">
+            <session xsi:type="xsd:string">
+                s8/BapeRiRIrguav4cVx/dZVVQ74p6Xj1u/pkZ7Tq+nWfIxYYwsQujGNetJRg0g1EwQmMTIX2x9c9KfGop63ow==
+            </session>
+            <fields xsi:type="rf_declaratie_looncomponent_fieldsArray">
+                <item xsi:type="rf_declaratie_looncomponent_fields">
+                    <rf_decl_lc_idnr xsi:type="xsd:int">12873</rf_decl_lc_idnr>
+                    <rf_decl_lc_type xsi:type="xsd:string">uren</rf_decl_lc_type>
+                    <rf_decl_lc_soort xsi:type="xsd:string">normale uren</rf_decl_lc_soort>
+                    <rf_decl_lc_loonslip_tekst xsi:type="xsd:string">Loon normale uren</rf_decl_lc_loonslip_tekst>
+                    <rf_decl_lc_factuur_tekst xsi:type="xsd:string">Loon normale uren</rf_decl_lc_factuur_tekst>
+                    <rf_decl_lc_eenheid xsi:type="xsd:string">uur</rf_decl_lc_eenheid>
+                    <rf_decl_lc_percentage_fw xsi:type="xsd:float">100.00</rf_decl_lc_percentage_fw>
+                    <rf_decl_lc_percentage_rl xsi:type="xsd:float">100.00</rf_decl_lc_percentage_rl>
+                    <rf_decl_lc_uurloon xsi:type="xsd:float">8.80</rf_decl_lc_uurloon>
+                    <rf_decl_lc_tarief xsi:type="xsd:float">16.72</rf_decl_lc_tarief>
+                    <rf_decl_lc_toelichting_rl xsi:type="xsd:string"></rf_decl_lc_toelichting_rl>
+                    <rf_decl_lc_naam_kort_rl xsi:type="xsd:string"></rf_decl_lc_naam_kort_rl>
+                    <rf_decl_lc_toelichting_fw xsi:type="xsd:string"></rf_decl_lc_toelichting_fw>
+                    <rf_decl_lc_naam_kort_fw xsi:type="xsd:string"></rf_decl_lc_naam_kort_fw>
+                    <rf_decl_lc_wijzig_rl xsi:type="xsd:int">1</rf_decl_lc_wijzig_rl>
+                    <rf_decl_lc_wijzig_fw xsi:type="xsd:int">1</rf_decl_lc_wijzig_fw>
+                </item>
+                <item xsi:type="rf_declaratie_looncomponent_fields">
+                    <rf_decl_lc_idnr xsi:type="xsd:int">12877</rf_decl_lc_idnr>
+                    <rf_decl_lc_type xsi:type="xsd:string">uren</rf_decl_lc_type>
+                    <rf_decl_lc_soort xsi:type="xsd:string">onregelmatige uren</rf_decl_lc_soort>
+                    <rf_decl_lc_loonslip_tekst xsi:type="xsd:string">Loon onregelmatige uren</rf_decl_lc_loonslip_tekst>
+                    <rf_decl_lc_factuur_tekst xsi:type="xsd:string">Loon onregelmatige uren</rf_decl_lc_factuur_tekst>
+                    <rf_decl_lc_eenheid xsi:type="xsd:string">uur</rf_decl_lc_eenheid>
+                    <rf_decl_lc_percentage_fw xsi:type="xsd:float">122.00</rf_decl_lc_percentage_fw>
+                    <rf_decl_lc_percentage_rl xsi:type="xsd:float">122.00</rf_decl_lc_percentage_rl>
+                    <rf_decl_lc_uurloon xsi:type="xsd:float">8.80</rf_decl_lc_uurloon>
+                    <rf_decl_lc_tarief xsi:type="xsd:float">17.60</rf_decl_lc_tarief>
+                    <rf_decl_lc_toelichting_rl xsi:type="xsd:string"></rf_decl_lc_toelichting_rl>
+                    <rf_decl_lc_naam_kort_rl xsi:type="xsd:string"></rf_decl_lc_naam_kort_rl>
+                    <rf_decl_lc_toelichting_fw xsi:type="xsd:string"></rf_decl_lc_toelichting_fw>
+                    <rf_decl_lc_naam_kort_fw xsi:type="xsd:string"></rf_decl_lc_naam_kort_fw>
+                    <rf_decl_lc_wijzig_rl xsi:type="xsd:int">1</rf_decl_lc_wijzig_rl>
+                    <rf_decl_lc_wijzig_fw xsi:type="xsd:int">1</rf_decl_lc_wijzig_fw>
+                </item>
+            </fields>
+        </rf_declaratie_looncomponent_result>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

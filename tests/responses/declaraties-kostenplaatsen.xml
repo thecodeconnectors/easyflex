@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SOAP-ENV:Header>
+        <SOAP-SEC:Signature xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12">
+            <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:SignedInfo>
+                    <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+                    <ds:Reference URI="#Body">
+                        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <ds:DigestValue>vsn63DDXMgnQ7ocZ3TrbO/+pWEo=</ds:DigestValue>
+                    </ds:Reference>
+                    <ds:SignatureValue>MC0CFQCtcjBAOuwH2gkc+tWqVmRWbEUtOAIUS5Bn/bLjl1W0nxp8SeA8RMGn9kY=
+                    </ds:SignatureValue>
+                </ds:SignedInfo>
+            </ds:Signature>
+        </SOAP-SEC:Signature>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12" SOAP-SEC:id="Body">
+        <rf_declaraties_kostenplaatsen_result xmlns="urn:EfWebservice">
+            <session xsi:type="xsd:string">
+                s8/BapeRiRIrguav4cVx/aGQUyW+Ycvz1u/pkZ7Tq+nWfIxYYwsQujGNetJRg0g1EwQmMTIX2x9c9KfGop63ow==
+            </session>
+            <fields xsi:type="rf_declaraties_kostenplaatsen_fieldsArray">
+                <item xsi:type="rf_declaraties_kostenplaatsen_fields">
+                    <rl_kostenplaats_idnr xsi:type="xsd:int">304170</rl_kostenplaats_idnr>
+                    <rl_kostenplaats_rlnr xsi:type="xsd:int">2631300</rl_kostenplaats_rlnr>
+                    <rl_kostenplaats_bedrijfsnaam xsi:type="xsd:string">Faculteit EWI</rl_kostenplaats_bedrijfsnaam>
+                    <rl_kostenplaats_code xsi:type="xsd:string">AAA AAA123</rl_kostenplaats_code>
+                    <rl_kostenplaats_naam xsi:type="xsd:string">AAA AAA123</rl_kostenplaats_naam>
+                    <rl_kostenplaats_status xsi:type="xsd:string">actief</rl_kostenplaats_status>
+                    <rf_decl_aantal xsi:type="xsd:int">6</rf_decl_aantal>
+                </item>
+                <item xsi:type="rf_declaraties_kostenplaatsen_fields">
+                    <rl_kostenplaats_idnr xsi:type="xsd:int">304172</rl_kostenplaats_idnr>
+                    <rl_kostenplaats_rlnr xsi:type="xsd:int">2631300</rl_kostenplaats_rlnr>
+                    <rl_kostenplaats_bedrijfsnaam xsi:type="xsd:string">Faculteit EWI</rl_kostenplaats_bedrijfsnaam>
+                    <rl_kostenplaats_code xsi:type="xsd:string">ABC ABC123</rl_kostenplaats_code>
+                    <rl_kostenplaats_naam xsi:type="xsd:string">ABC ABC123</rl_kostenplaats_naam>
+                    <rl_kostenplaats_status xsi:type="xsd:string">actief</rl_kostenplaats_status>
+                    <rf_decl_aantal xsi:type="xsd:int">6</rf_decl_aantal>
+                </item>
+            </fields>
+        </rf_declaraties_kostenplaatsen_result>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

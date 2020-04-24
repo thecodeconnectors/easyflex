@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SOAP-ENV:Header>
+        <SOAP-SEC:Signature xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12">
+            <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:SignedInfo>
+                    <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+                    <ds:Reference URI="#Body">
+                        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <ds:DigestValue>JZ8ZGVB6CGnaFxiu5jPb3yuzEDc=</ds:DigestValue>
+                    </ds:Reference>
+                    <ds:SignatureValue>MCwCFBBaWegZOFHqsWezdSMUNXPKcGKtAhRShHYNO7zi/8DV5Y9eijtoOUlbRg==
+                    </ds:SignatureValue>
+                </ds:SignedInfo>
+            </ds:Signature>
+        </SOAP-SEC:Signature>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12" SOAP-SEC:id="Body">
+        <rl_contactpersoon_result xmlns="urn:EfWebservice">
+            <session xsi:type="xsd:string">
+                s8/BapeRiRJn6k1DWiQP2cWeBZ9kkzyI1u/pkZ7Tq+nvyaSOCqQLuq48uvmknxuY/4ybisY7m86mWS6QAqh/DxUutzqWh3j32hOLl1Vfh28=
+            </session>
+            <fields xsi:type="rl_contactpersoon_fieldsArray">
+                <item xsi:type="rl_contactpersoon_fields">
+                    <rl_contactpersoon_idnr xsi:type="xsd:int">5931149</rl_contactpersoon_idnr>
+                    <rl_contactpersoon_status xsi:type="xsd:string">Actief</rl_contactpersoon_status>
+                    <rl_contactpersoon_geslacht xsi:type="xsd:string">Man</rl_contactpersoon_geslacht>
+                    <rl_contactpersoon_titel xsi:type="xsd:string"></rl_contactpersoon_titel>
+                    <rl_contactpersoon_voorletters xsi:type="xsd:string">HL</rl_contactpersoon_voorletters>
+                    <rl_contactpersoon_voorvoegsels xsi:type="xsd:string">de</rl_contactpersoon_voorvoegsels>
+                    <rl_contactpersoon_achternaam xsi:type="xsd:string">Vries</rl_contactpersoon_achternaam>
+                    <rl_contactpersoon_meisjes_voorvoegsels
+                            xsi:type="xsd:string"></rl_contactpersoon_meisjes_voorvoegsels>
+                    <rl_contactpersoon_meisjes_achternaam xsi:type="xsd:string"></rl_contactpersoon_meisjes_achternaam>
+                    <rl_contactpersoon_adres xsi:type="xsd:string"></rl_contactpersoon_adres>
+                    <rl_contactpersoon_huisnummer xsi:type="xsd:int" xsi:nil="true"></rl_contactpersoon_huisnummer>
+                    <rl_contactpersoon_huisnummer_toevoeging
+                            xsi:type="xsd:string"></rl_contactpersoon_huisnummer_toevoeging>
+                    <rl_contactpersoon_postcode xsi:type="xsd:string"></rl_contactpersoon_postcode>
+                    <rl_contactpersoon_plaats xsi:type="xsd:string"></rl_contactpersoon_plaats>
+                    <rl_contactpersoon_land_code xsi:type="xsd:string">NL</rl_contactpersoon_land_code>
+                    <rl_contactpersoon_land xsi:type="xsd:string">Nederland</rl_contactpersoon_land>
+                </item>
+            </fields>
+        </rl_contactpersoon_result>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

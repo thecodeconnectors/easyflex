@@ -1,0 +1,30 @@
+{
+  "name": "thecodeconnectors/easyflex",
+  "description": "A PHP client for the EasyFlex Webservices API",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Martijn van Nieuwenhoven",
+      "email": "martijn@thecodeconnectors.nl"
+    }
+  ],
+  "require": {
+    "ext-soap": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5",
+    "mockery/mockery": "^1.3",
+    "ext-simplexml": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "TheCodeConnectors\\EasyFlex\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TheCodeConnectors\\EasyFlex\\Tests\\": "tests/"
+    }
+  }
+}
