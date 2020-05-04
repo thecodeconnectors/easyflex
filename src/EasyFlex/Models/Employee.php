@@ -6,188 +6,99 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Client;
 
 class Employee extends EasyFlex
 {
-    public $fw_flexwerker_idnr; // int
-
-    public $fw_geslacht; // string
-
-    public $fw_burgerlijke_staat; // string
-
-    public $fw_titel; // string
-
-    public $fw_voorletters; // string
-
-    public $fw_voorvoegsels; // string
-
-    public $fw_achternaam; // string
-
-    public $fw_meisjesnaam_voorvoegsels; // string
-
-    public $fw_meisjesnaam_achternaam; // string
-
-    public $fw_roepnaam; // string
-
-    public $fw_domicilieadres_postcode; // string
-
-    public $fw_domicilieadres_straat; // string
-
-    public $fw_domicilieadres_huisnummer; // int
-
-    public $fw_domicilieadres_huisnummer_toevoeging; // string
-
-    public $fw_domicilieadres_plaats; // string
-
-    public $fw_domicilieadres_land_code; // string
-
-    public $fw_domicilieadres_land; // string
-
-    public $fw_woonadres_postcode; // string
-
-    public $fw_woonadres_straat; // string
-
-    public $fw_woonadres_huisnummer; // int
-
-    public $fw_woonadres_huisnummer_toevoeging; // string
-
-    public $fw_woonadres_plaats; // string
-
-    public $fw_woonadres_land_code; // string
-
-    public $fw_woonadres_land; // string
-
-    public $fw_geboortedatum; // string
-
-    public $fw_geboorteplaats; // string
-
-    public $fw_geboorteland_code; // string
-
-    public $fw_geboorteland; // string
-
-    public $fw_identificatiebewijs; // string
-
-    public $fw_nationaliteit_code; // string
-
-    public $fw_nationaliteit; // string
-
-    public $fw_identificatiebewijs_nummer; // string
-
-    public $fw_identificatiebewijs_geldig_tm; // string
-
-    public $fw_verblijfsvergunning_afgegeven_door; // string
-
-    public $fw_verblijfsvergunning_afgegeven_op; // string
-
-    public $fw_verblijfsvergunning_nummer; // string
-
-    public $fw_verblijfsvergunning_geldig_tm; // string
-
-    public $fw_tewerkstellingsvergunning_afgegeven_door; // string
-
-    public $fw_tewerkstellingsvergunning_afgegeven_op; // string
-
-    public $fw_tewerkstellingsvergunning_nummer; // string
-
-    public $fw_tewerkstellingsvergunning_geldig_tm; // string
-
-    public $fw_rijbewijs; // string
-
-    public $fw_rijbewijs_nummer; // string
-
-    public $fw_rijbewijs_geldig_tm; // string
-
-    public $fw_vervoer_fiets; // string
-
-    public $fw_vervoer_bromfiets; // string
-
-    public $fw_vervoer_motorfiets; // string
-
-    public $fw_vervoer_personenbus; // string
-
-    public $fw_vervoer_personenauto; // string
-
-    public $fw_betaalwijze_1; // string
-
-    public $fw_rekeningnummer_1; // string
-
-    public $fw_betalingskenmerk_1; // string
-
-    public $fw_afwijkende_begunstigde_1_naam; // string
-
-    public $fw_afwijkende_begunstigde_1_plaats; // string
-
-    public $fw_betaalwijze_2; // string
-
-    public $fw_rekeningnummer_2; // string
-
-    public $fw_betalingskenmerk_2; // string
-
-    public $fw_afwijkende_begunstigde_2_naam; // string
-
-    public $fw_afwijkende_begunstigde_2_plaats; // string
-
-    public $fw_sofinummer; // int
-
-    public $fw_burgerservicenummer; // int
-
-    public $fw_relatiebeheerder_idnr; // int
-
-    public $fw_relatiebeheerder_formeel; // string
-
-    public $fw_relatiebeheerder_informeel; // string
-
-    public $fw_locatie_idnr; // int
-
-    public $fw_locatie_naam; // string
-
-    public $fw_identificatie_img; // int
-
-    public $fw_verblijfsvergunning_img; // int
-
-    public $fw_tewerkstellingsvergunning_img; // int
-
-    public $fw_rijbewijs_img; // int
-
-    public $fw_identificatie_image; // base64Binary
-
-    public $fw_verblijfsvergunning_image; // base64Binary
-
-    public $fw_tewerkstellingsvergunning_image; // base64Binary
-
-    public $fw_rijbewijs_image; // base64Binary
-
     /**
      * @var array
      */
-    public $english = [
-        'fw_flexwerker_idnr' => 'employee_id',
+    public $fields = [
+        'id'                                 => 'fw_flexwerker_idnr',
+        'sexe'                               => 'fw_geslacht',
+        'marital_status'                     => 'fw_burgerlijke_staat',
+        'title'                              => 'fw_titel',
+        'initials'                           => 'fw_voorletters',
+        'prefix'                             => 'fw_voorvoegsels',
+        'last_name'                          => 'fw_achternaam',
+        'maiden_name_prefix'                 => 'fw_meisjesnaam_voorvoegsels',
+        'maiden_name_last_name'              => 'fw_meisjesnaam_achternaam',
+        'name'                               => 'fw_roepnaam',
+        'domicile_address_postal_code'       => 'fw_domicilieadres_postcode',
+        'domicile_address_house_number'      => 'fw_domicilieadres_huisnummer',
+        'domicile_address_addition'          => 'fw_domicilieadres_huisnummer_toevoeging',
+        'domicile_address_place'             => 'fw_domicilieadres_plaats',
+        'domicile_address_country_code'      => 'fw_domicilieadres_land_code',
+        'domicile_address_country'           => 'fw_domicilieadres_land',
+        'home_address_postal_code'           => 'fw_woonadres_postcode',
+        'home_address_street'                => 'fw_woonadres_straat',
+        'home_address_house_number'          => 'fw_woonadres_huisnummer',
+        'home_address_house_number_addition' => 'fw_woonadres_huisnmmuer_toevoeging',
+        'home_address_place'                 => 'fw_woonadres_plaats',
+        'home_address_country_code'          => 'fw_woonadres_land_code',
+        'home_address_country'               => 'fw_woonadres_land',
+        'date_of_birth'                      => 'fw_geboortedatum',
+        'place_of_birth'                         => 'fw_geboorteplaats',
+        'country_of_birth_code'              => 'fw_geboorteland_code',
+        'country_of_birth'                   => 'fw_geboorteland',
+        'identification'                     => 'fw_identificatiebewijs',
+        'nationality_code'                   => 'fw_nationaliteit_code',
+        'nationality'                        => 'fw_nationaliteit',
+        'identification_number'              => 'fw_identificatiebewijs_nummer',
+        'identification_valid_until'         => 'fw_identificatiebewijs_geldig_tm',
+        'residence_permit_issued_by'         => 'fw_verblijfsvergunning_afgegeven_door',
+        'residence_permit_issued_on'         => 'fw_verblijfsvergunning_afgegeven_op',
+        'residence_permit_number'            => 'fw_verblijfsvergunning_nummer',
+        'residence_permit_valid_until'       => 'fw_verblijfsvergunning_geldig_tm',
+        'work_permit_issued_by'              => 'fw_tewerkstellingsvergunning_afgegeven_door',
+        'work_permit_issued_on'              => 'fw_tewerkstellingsvergunning_afgegeven_op',
+        'work_permit_number'                 => 'fw_tewerkstellingsvergunning_nummer',
+        'work_permit_valid_until'            => 'fw_tewerkstellingsvergunning_geldig_tm',
+        'driver_license'                     => 'fw_rijbewijs',
+        'driver_license_number'              => 'fw_rijbewijs_nummer',
+        'driver_license_valid_until'         => 'fw_rijbewijs_geldig_tm',
+        'transport_bike'                     => 'fw_vervoer_fiets',
+        'transport_moped'                    => 'fw_vervoer_bromfiets',
+        'transport_motorcycle'               => 'fw_vervoer_motorfiets',
+        'transport_passenger_bus'            => 'fw_vervoer_personenbus',
+        'transport_car'                      => 'fw_vervoer_personenauto',
+        'payment_method_1'                   => 'fw_betaalwijze_1',
+        'acount_number_1'                    => 'fw_rekeningnummer_1',
+        'payment_reference_1'                => 'fw_betalingskenmerk_1',
+        'different_beneficiary_1_name'       => 'fw_afwijkende_begunstigde_1_naam',
+        'different_beneficiary_1_place'      => 'fw_afwijkende_begunstigde_1_plaats',
+        'payment_method_2'                   => 'fw_betaalwijze_2',
+        'acount_number_2'                    => 'fw_rekeningnummer_2',
+        'payment_reference_2'                => 'fw_betalingskenmerk_2',
+        'different_beneficiary_2_name'       => 'fw_afwijkende_begunstigde_2_naam',
+        'different_beneficiary_2_place'      => 'fw_afwijkende_begunstigde_2_plaats',
+        'social_security_number'             => 'fw_sofinummer',
+        'citizen_service_number'             => 'fw_burgerservicenummer',
+        'relation_manager_id'                => 'fw_relatiebeheerder_idnr',
+        'relation_manager_formal'            => 'fw_relatiebeheerder_formeel',
+        'relation_manager_informal'          => 'fw_relatiebeheerder_informeel',
+        'location_id'                        => 'fw_locatie_idnr',
+        'location_name'                      => 'fw_locatie_naam',
+        'identification_image'               => 'fw_identificatie_image',
+        'residence_permit_image'             => 'fw_verblijfsvergunning_image',
+        'work_permit_image'                  => 'fw_tewerkstellingsvergunning_image',
+        'driver_license_image'               => 'fw_rijbewijs_image',
     ];
 
     /**
      * @param $userName
      * @param $password
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function login($userName, $password)
     {
         $this->client()->authenticate($userName, $password, Client::EMPLOYEE);
     }
 
-    public function getDetails()
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function details()
     {
-        $this->responseToProperties(
-            $this->client()->call('fw_persoonsgegevens')
-        );
-
-        return $this;
-    }
-
-    protected function responseToProperties(Client $client)
-    {
-        if($response = $client->getResponse()) {
-            $this->fill($response->toArray());
-        }
+        return $this->client()->personalDetails();
     }
 
     public function declarations()

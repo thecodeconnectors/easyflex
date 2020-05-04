@@ -3,11 +3,13 @@
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
 
 /**
  * Trait HandlesRelationData
+ *
  * @mixin \TheCodeConnectors\EasyFlex\EasyFlex\Client
  */
 trait HandlesRelationData
@@ -21,7 +23,7 @@ trait HandlesRelationData
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function declarations($parameters = [])
+    public function declarations($parameters = []): EasyFlex
     {
         return $this
             ->call('rf_declaraties', $parameters)
@@ -33,9 +35,12 @@ trait HandlesRelationData
      * @param null $id
      * @param int  $status
      *
-     * @return mixed
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function contacts($id = null, $status = Contact::STATUS_ACTIVE)
+    public function contacts($id = null, $status = Contact::STATUS_ACTIVE): EasyFlex
     {
         $parameters = [
             'rl_contactpersoon_idnr'   => $id,
@@ -51,9 +56,12 @@ trait HandlesRelationData
     /**
      * @param null $id
      *
-     * @return mixed
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function placements($id = null)
+    public function placements($id = null): EasyFlex
     {
         $parameters = [
             'rl_plaatsing_idnr' => $id,

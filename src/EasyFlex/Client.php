@@ -5,9 +5,11 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex;
 use SoapFault;
 use SoapClient;
 use TheCodeConnectors\EasyFlex\EasyFlex\Errors\Messages;
-use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\AuthenticatesUsers;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
@@ -17,7 +19,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordExceptio
  */
 class Client
 {
-    use AuthenticatesUsers, HandlesRelationData;
+    use AuthenticatesUsers, HandlesGlobalEasyFlexData, HandlesRelationData, HandlesEmployeeData;
 
     /**
      * @var string
@@ -35,7 +37,7 @@ class Client
     protected $wsdl = 'https://www.easyflex.net/webservice/tools/wsdl.tpsp';
 
     /**
-     * @var \SoapClient|null
+     * @var \SoapClient
      */
     protected $soapClient;
 
@@ -144,10 +146,9 @@ class Client
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function call($method, $parameters = [], $fields = [])
+    public function call($method, $parameters = [], $fields = []): self
     {
         try {
-
             // init the old school soap client
             $client = $this->soapClient();
 
@@ -160,9 +161,6 @@ class Client
             // set the soap request we passed for easier debugging
             $this->request = $client->__getLastRequest();
 
-            // pass back the client so we can use it again with the new session key
-            return $this;
-
         } catch (SoapFault $fault) {
 
             // we tried, but failed
@@ -173,6 +171,9 @@ class Client
             // only an arbitrary code with aDutch message
             $this->handleSoapFault($fault);
         }
+
+        // pass back the client so we can use it again with the new session key
+        return $this;
     }
 
     /**
@@ -252,10 +253,10 @@ class Client
      *
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException
      */
-    public function checkLicenseError(SoapFault $fault)
+    public function checkLicenseError(SoapFault $fault): void
     {
         if (strpos($fault->faultstring, " object has no 'license' property") !== false) {
-            throw new MissingLicenseException("$fault->faultstring");
+            throw new MissingLicenseException((string)$fault->faultstring);
         }
     }
 

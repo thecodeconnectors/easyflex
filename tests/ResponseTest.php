@@ -16,7 +16,7 @@ class ResponseTest extends TestCase
     {
         parent::setUp();
 
-        $this->soapClient = new SoapClient(__DIR__ . '/wsdl/wsdl.tpsp', ['cache_wsdl' => WSDL_CACHE_NONE]);
+        $this->soapClient = new SoapClient(__DIR__ . '/../wsdl/wsdl.tpsp', ['cache_wsdl' => WSDL_CACHE_NONE]);
     }
 
     public function test_it_returns_the_raw_soap_response(): void

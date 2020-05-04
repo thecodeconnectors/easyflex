@@ -2,12 +2,14 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
-use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HasMappedAttributes;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HasFields;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HasAttributes;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\InteractsWithEasyFlex;
+use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\TransfersFieldsToEasyFlexFields;
 
 abstract class EasyFlex
 {
-    use InteractsWithEasyFlex, HasMappedAttributes;
+    use InteractsWithEasyFlex, TransfersFieldsToEasyFlexFields, HasAttributes, HasFields;
 
     //abstract function get();
     //
@@ -25,5 +27,4 @@ abstract class EasyFlex
     //{
     //
     //}
-
 }

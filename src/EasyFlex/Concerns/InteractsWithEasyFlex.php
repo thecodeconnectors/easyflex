@@ -2,7 +2,6 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
-use \SoapClient;
 use TheCodeConnectors\EasyFlex\EasyFlex\Client;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 
@@ -12,7 +11,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 trait InteractsWithEasyFlex
 {
     /**
-     * @var
+     * @var \TheCodeConnectors\EasyFlex\EasyFlex\Client
      */
     protected $client;
 
@@ -22,11 +21,6 @@ trait InteractsWithEasyFlex
     protected $parameters = [];
 
     /**
-     * @var array
-     */
-    protected $fields = [];
-
-    /**
      * @param \TheCodeConnectors\EasyFlex\EasyFlex\Client $client
      *
      * @return $this
@@ -34,18 +28,6 @@ trait InteractsWithEasyFlex
     public function setClient(Client $client): self
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * @param array $fields
-     *
-     * @return $this
-     */
-    public function setFields(array $fields = [])
-    {
-        $this->fields = $fields;
 
         return $this;
     }
@@ -84,14 +66,6 @@ trait InteractsWithEasyFlex
     public function parameters()
     {
         return $this->parameters;
-    }
-
-    /**
-     * @return array
-     */
-    public function fields()
-    {
-        return $this->fields;
     }
 
 }
