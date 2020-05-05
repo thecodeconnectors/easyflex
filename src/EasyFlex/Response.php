@@ -62,7 +62,7 @@ class Response
     /**
      * @return array
      */
-    public function fields(): array
+    public function attributes(): array
     {
         $response = is_array($this->soapResponse) ? $this->soapResponse[0] : $this->soapResponse;
 
@@ -76,7 +76,7 @@ class Response
      */
     public function toModel($className): Models\EasyFlex
     {
-        $attributes = $this->fields();
+        $attributes = $this->attributes();
 
         return new $className($attributes);
     }

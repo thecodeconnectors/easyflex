@@ -2,7 +2,6 @@
 
 namespace TheCodeConnectors\EasyFlex\Tests;
 
-use TheCodeConnectors\EasyFlex\EasyFlex\Client;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
 
 class DeclarationsTest extends EasyFlexSoapClientTest
@@ -29,13 +28,14 @@ class DeclarationsTest extends EasyFlexSoapClientTest
         $this->assertInstanceOf(Declaration::class, $declaration);
     }
 
-    public function xxtest_it_gets_a_declaration_by_id()
+    public function test_it_gets_a_declaration_by_id()
     {
+        $mock = \Mockery::mock($this->client);
 
-        $mock = \Mockery::mock(Client::class);
-        $mock->shouldReceive('declarations')->andReturn(new Declaration(['rf_decl_idnr' => 123]));
+        $mock->shouldReceive('declarations')
+            ->andReturn(new Declaration(['rf_decl_idnr' => 123]));
 
-        $declaration = Declaration::select()->setClient($this->client)->get(123);
+        $declaration = Declaration::select()->setClient($mock)->get(123);
 
         $this->assertEquals(123, $declaration->rf_decl_idnr);
     }

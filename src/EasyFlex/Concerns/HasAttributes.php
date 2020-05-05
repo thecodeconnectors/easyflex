@@ -69,6 +69,14 @@ trait HasAttributes
     }
 
     /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * @param string $key
      *
      * @return bool
