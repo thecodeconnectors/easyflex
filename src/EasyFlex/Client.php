@@ -158,6 +158,10 @@ class Client
             // call the soap service and set the response
             $this->response = new Response($client->__soapCall($method, $payload));
 
+            // if we get a new session from the response, store it to the cient
+            // @vojkan this part is not working
+            $this->session = $this->response->session() ?: $this->session;
+
             // set the soap request we passed for easier debugging
             $this->request = $client->__getLastRequest();
 
@@ -197,12 +201,12 @@ class Client
      */
     public function constructPayload($parameters = [], $fields = []): array
     {
-        return array_filter([
+        return [
             'license'    => $this->license,
             'parameters' => array_filter($parameters),
             'fields'     => $fields ? array_fill_keys($fields, '') : null,
             'session'    => $this->session,
-        ]);
+        ];
     }
 
     /**
@@ -233,7 +237,7 @@ class Client
 
         // we were not able to present a usefull message,
         // so pass throw whatever we got from Easyflex.
-        throw new EasyFlexException($code, $message, $detail);
+        throw new EasyFlexException($code, $message, $detail ?? $code);
     }
 
     /**
