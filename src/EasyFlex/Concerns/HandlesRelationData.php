@@ -4,6 +4,7 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
 
@@ -18,29 +19,29 @@ trait HandlesRelationData
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function declarations($parameters = []): EasyFlex
+    public function declarations($parameters = []): EasyFlexCollection
     {
         return $this
             ->call('rf_declaraties', $parameters)
             ->getResponse()
-            ->toModel(Declaration::class);
+            ->toCollection(Declaration::class);
     }
 
     /**
      * @param null $id
      * @param int  $status
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function contacts($id = null, $status = Contact::STATUS_ACTIVE): EasyFlex
+    public function contacts($id = null, $status = Contact::STATUS_ACTIVE): EasyFlexCollection
     {
         $parameters = [
             'rl_contactpersoon_idnr'   => $id,
@@ -50,18 +51,18 @@ trait HandlesRelationData
         return $this
             ->call('rl_contactpersoon', $parameters)
             ->getResponse()
-            ->toModel(Contact::class);
+            ->toCollection(Contact::class);
     }
 
     /**
      * @param null $id
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    public function placements($id = null): EasyFlex
+    public function placements($id = null): EasyFlexCollection
     {
         $parameters = [
             'rl_plaatsing_idnr' => $id,
@@ -70,7 +71,7 @@ trait HandlesRelationData
         return $this
             ->call('rl_plaatsingen', $parameters)
             ->getResponse()
-            ->toModel(Placement::class);
+            ->toCollection(Placement::class);
     }
 
 }

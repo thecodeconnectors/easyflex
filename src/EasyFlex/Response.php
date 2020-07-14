@@ -2,6 +2,8 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex;
 
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
+
 class Response
 {
     /**
@@ -66,7 +68,15 @@ class Response
     {
         $response = is_array($this->soapResponse) ? $this->soapResponse[0] : $this->soapResponse;
 
-        return $response ? $response->fields : [];
+        if (isset($response->fields, $response->fields->item)) {
+            return (array)$response->fields->item;
+        }
+
+        if (isset($response->fields)) {
+            return (array)$response->fields;
+        }
+
+        return [];
     }
 
     /**
@@ -79,6 +89,22 @@ class Response
         $attributes = $this->attributes();
 
         return new $className($attributes);
+    }
+
+    /**
+     * @param $className
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     */
+    public function toCollection($className): EasyFlexCollection
+    {
+        $items = [];
+
+        foreach ($this->attributes() as $item) {
+            $items[] = new $className((array)$item);
+        }
+
+        return new EasyFlexCollection($items);
     }
 
 }

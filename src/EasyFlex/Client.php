@@ -200,12 +200,19 @@ class Client
      */
     public function constructPayload($parameters = [], $fields = []): array
     {
-        return [
+        $payload = [
             'license'    => $this->license,
             'parameters' => array_filter($parameters),
             'fields'     => $fields ? array_fill_keys($fields, '') : null,
-            'session'    => $this->session,
         ];
+
+        if ($this->session) {
+            // only add the session if we have one,
+            // otherwise we get a invalid session error, when authenticating
+            $payload['session'] = $this->session;
+        }
+
+        return $payload;
     }
 
     /**
