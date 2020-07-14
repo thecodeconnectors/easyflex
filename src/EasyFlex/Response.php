@@ -56,7 +56,7 @@ class Response
         }
 
         // when we get any other response, the session is in the session attribute
-        return $response->session;
+        return $response->session ?? null;
     }
 
     /**
