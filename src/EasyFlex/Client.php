@@ -159,7 +159,6 @@ class Client
             $this->response = new Response($client->__soapCall($method, $payload));
 
             // if we get a new session from the response, store it to the cient
-            // @vojkan this part is not working
             $this->session = $this->response->session() ?: $this->session;
 
             // set the soap request we passed for easier debugging
