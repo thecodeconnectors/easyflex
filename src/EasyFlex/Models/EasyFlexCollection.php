@@ -2,7 +2,9 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
-class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
+use ArrayIterator;
+
+class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess, \IteratorAggregate
 {
 
     /**
@@ -65,6 +67,14 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
     public function offsetUnset($key)
     {
         unset($this->items[$key]);
+    }
+
+    /**
+     * @return \ArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
     }
 
     /**

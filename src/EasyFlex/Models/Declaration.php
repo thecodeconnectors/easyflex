@@ -43,7 +43,7 @@ class Declaration extends EasyFlex
         'vacancy_end_date'                      => 'rf_decl_job_einddatum',
         'vacancy_cost_center_number'            => 'rf_decl_job_kostenplaats_nr',
         'vacancy_specification_code'            => 'rf_decl_job_speccode',
-        'vacancy_prize_group'                   => 'rf_decl_job_premiegroep',
+        'vacancy_price_group'                   => 'rf_decl_job_premiegroep',
         'employee_id'                           => 'rf_decl_flexwerker_idnr',
         'employee'                              => 'rf_decl_flexwerker',
         'employee_last_name'                    => 'rf_decl_flexwerker_achternaam',

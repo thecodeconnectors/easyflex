@@ -10,7 +10,7 @@ class DeclarationWithdrawal extends EasyFlex
     protected $fields = [
         'id'                   => 'rf_decl_opn_idnr',
         'specification_code'   => 'rf_decl_opn_speccode',
-        'prize_group'          => 'rf_decl_opn_premiegroep',
+        'price_group'          => 'rf_decl_opn_premiegroep',
         'wage_type_id'         => 'rf_decl_lc_idnr',
         'wage_type'            => 'rf_decl_lc_type',
         'wage_type_category'   => 'rf_decl_lc_soort',
