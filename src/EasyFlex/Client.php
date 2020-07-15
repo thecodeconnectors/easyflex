@@ -11,6 +11,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingSessionException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
 
@@ -156,7 +157,7 @@ class Client
             $payload = [$method => $this->constructPayload($parameters, $fields)];
 
             // call the soap service and set the response
-            $this->response = new Response($client->__soapCall($method, $payload));
+            $this->response = new Response($client->__soapCall($method, $payload), $this);
 
             // if we get a new session from the response, store it to the cient
             $this->session = $this->response->session() ?: $this->session;
@@ -226,6 +227,7 @@ class Client
     {
         $this->checkServiceOffline($fault);
         $this->checkLicenseError($fault);
+        $this->checkSessionError($fault);
 
         $code    = $fault->faultstring;
         $message = (isset($fault->detail, $fault->detail->message)) ? $fault->detail->message : '';
@@ -267,6 +269,18 @@ class Client
     {
         if (strpos($fault->faultstring, " object has no 'license' property") !== false) {
             throw new MissingLicenseException((string)$fault->faultstring);
+        }
+    }
+
+    /**
+     * @param \SoapFault $fault
+     *
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException
+     */
+    public function checkSessionError(SoapFault $fault): void
+    {
+        if (strpos($fault->faultstring, " object has no 'session' property") !== false) {
+            throw new MissingSessionException((string)$fault->faultstring);
         }
     }
 

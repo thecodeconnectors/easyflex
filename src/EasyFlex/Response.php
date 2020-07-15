@@ -12,11 +12,18 @@ class Response
     protected $soapResponse;
 
     /**
-     * @param object|array|null $soapResponse
+     * @var \TheCodeConnectors\EasyFlex\EasyFlex\Client|null
      */
-    public function __construct($soapResponse = null)
+    protected $client;
+
+    /**
+     * @param null                                             $soapResponse
+     * @param \TheCodeConnectors\EasyFlex\EasyFlex\Client|null $client
+     */
+    public function __construct($soapResponse = null, Client $client = null)
     {
         $this->soapResponse = $soapResponse;
+        $this->client       = $client;
     }
 
     /**
@@ -98,10 +105,16 @@ class Response
      */
     public function toCollection($className): EasyFlexCollection
     {
-        $items = [];
+        $items      = [];
+        $attributes = $this->attributes();
 
-        foreach ($this->attributes() as $item) {
-            $items[] = new $className((array)$item);
+        if ( ! isset($attributes[0])) {
+            // dealing with a single record
+            return new EasyFlexCollection([(new $className((array)$attributes))->setClient($this->client)]);
+        }
+
+        foreach ($attributes as $item) {
+            $items[] = (new $className((array)$item))->setClient($this->client);
         }
 
         return new EasyFlexCollection($items);

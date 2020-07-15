@@ -3,10 +3,12 @@
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\ContactCommunication;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\User;
 
 /**
  * Trait HandlesRelationData
@@ -55,6 +57,30 @@ trait HandlesRelationData
     }
 
     /**
+     * @param null $contactId
+     * @param int  $type
+     * @param null $relationId
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function contactCommunications($contactId = null, $type = ContactCommunication::TYPE_EMAIL, $relationId = null): EasyFlexCollection
+    {
+        $parameters = [
+            'rl_contactpersoon_idnr' => $contactId,
+            'wm_com_type'            => $type,
+            'rl_relatie_idnr'        => $relationId,
+        ];
+
+        return $this
+            ->call('rl_contactpersoon_communicatie', array_filter($parameters))
+            ->getResponse()
+            ->toCollection(ContactCommunication::class);
+    }
+
+    /**
      * @param null $id
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
@@ -72,6 +98,26 @@ trait HandlesRelationData
             ->call('rl_plaatsingen', $parameters)
             ->getResponse()
             ->toCollection(Placement::class);
+    }
+
+    /**
+     * @param null $id
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function users($id = null): EasyFlexCollection
+    {
+        $parameters = [
+            'user_idnr' => $id,
+        ];
+
+        return $this
+            ->call('user_list', $parameters)
+            ->getResponse()
+            ->toCollection(User::class);
     }
 
 }

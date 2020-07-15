@@ -22,6 +22,14 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * @return mixed
+     */
+    public function first()
+    {
+        return reset($this->items);
+    }
+
+    /**
      * @return int
      */
     public function count()

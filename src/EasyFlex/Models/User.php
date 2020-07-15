@@ -12,8 +12,8 @@ class User extends EasyFlex
      */
     protected $fields = [
         'id'                  => 'user_idnr',
-        'name'                => 'user_naam',
-        'pasword'             => 'user_wachtwoord',
+        'user_name'           => 'user_naam',
+        'password'            => 'user_wachtwoord',
         'initials'            => 'user_voorletters',
         'insertion'           => 'user_tussenvoegsels',
         'last_name'           => 'user_achternaam',

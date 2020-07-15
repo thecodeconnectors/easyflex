@@ -56,4 +56,39 @@ class Contact extends EasyFlex
         return $this->rl_contactpersoon_status === self::STATUS_PASSIVE;
     }
 
+    /**
+     * @param int $type
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function communication($type = ContactCommunication::TYPE_EMAIL)
+    {
+        return $this->client()->contactCommunications($this->rl_contactpersoon_idnr, $type);
+    }
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function email()
+    {
+        return $this->communication();
+    }
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function phone()
+    {
+        return $this->communication(ContactCommunication::TYPE_PHONE);
+    }
+
 }
