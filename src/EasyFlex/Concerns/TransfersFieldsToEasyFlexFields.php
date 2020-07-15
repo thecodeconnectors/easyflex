@@ -8,6 +8,22 @@ trait TransfersFieldsToEasyFlexFields
 {
 
     /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Concerns\TransfersFieldsToEasyFlexFields|\TheCodeConnectors\EasyFlex\EasyFlex\Contracts\TransfersEasyFlexData
+     */
+    public function toEnglish()
+    {
+        return static::fromEasyFlex($this->attributes);
+    }
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Concerns\TransfersFieldsToEasyFlexFields|\TheCodeConnectors\EasyFlex\EasyFlex\Contracts\TransfersEasyFlexData
+     */
+    public function toDutch()
+    {
+        return static::toEasyFlex($this->attributes);
+    }
+
+    /**
      * @param array $attributes
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Contracts\TransfersEasyFlexData|static
