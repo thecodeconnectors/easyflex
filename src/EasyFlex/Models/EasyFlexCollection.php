@@ -3,6 +3,7 @@
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 use ArrayIterator;
+use TheCodeConnectors\EasyFlex\EasyFlex\Contracts\Arrayable;
 
 class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess, \IteratorAggregate
 {
@@ -26,6 +27,14 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
     public function count()
     {
         return count($this->items);
+    }
+
+    /**
+     * @return array
+     */
+    public function all()
+    {
+        return $this->items;
     }
 
     /**
@@ -90,7 +99,9 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
      */
     public function toArray()
     {
-        return $this->items;
+        return $this->map(function ($value) {
+            return $value instanceof Arrayable ? $value->toArray() : $value;
+        })->all();
     }
 
     /**
@@ -100,6 +111,21 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
     public function toJson($options = 0)
     {
         return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * Run a map over each of the items.
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function map(callable $callback)
+    {
+        $keys = array_keys($this->items);
+
+        $items = array_map($callback, $this->items, $keys);
+
+        return new static(array_combine($keys, $items));
     }
 
     /**
