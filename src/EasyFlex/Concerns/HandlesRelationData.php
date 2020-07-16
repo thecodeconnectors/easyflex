@@ -45,7 +45,7 @@ trait HandlesRelationData
      */
     public function declarationLines($declarationIds = []): EasyFlexCollection
     {
-        $parameters    = [
+        $parameters = [
             'rf_decl_idnrs' => $this->toNamedParameters($declarationIds, 'rf_decl_idnr'),
         ];
 
