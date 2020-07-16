@@ -2,13 +2,14 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\User;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\ContactCommunication;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\User;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\DeclarationLine;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\ContactCommunication;
 
 /**
  * Trait HandlesRelationData
@@ -32,6 +33,26 @@ trait HandlesRelationData
             ->call('rf_declaraties', $parameters)
             ->getResponse()
             ->toCollection(Declaration::class);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function declarationLines($declarationIds = []): EasyFlexCollection
+    {
+        $parameters    = [
+            'rf_decl_idnrs' => $this->toNamedParameters($declarationIds, 'rf_decl_idnr'),
+        ];
+
+        return $this
+            ->call('rf_declaratie_regels', $parameters)
+            ->getResponse()
+            ->toCollection(DeclarationLine::class);
     }
 
     /**

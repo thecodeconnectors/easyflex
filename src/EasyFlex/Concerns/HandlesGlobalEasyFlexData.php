@@ -54,4 +54,25 @@ trait HandlesGlobalEasyFlexData
             ->toModel(CompanyDetails::class);
     }
 
+    /**
+     * EasyFlex wants some parameters to be wrapped in seperate arrays,
+     * where each parameter value is wrapped in a single array with the name in the key:
+     *
+     * $parameters = [
+     *    0 => [$name => 12345],
+     *    1 => [$name => 67890],
+     * ];
+     *
+     * @param array $parameters
+     * @param       $name
+     *
+     * @return array[]
+     */
+    public function toNamedParameters(array $parameters, $name)
+    {
+        return array_map(function ($parameters) use ($name) {
+            return [$name => $parameters];
+        }, $parameters);
+    }
+
 }
