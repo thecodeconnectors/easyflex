@@ -32,11 +32,13 @@ class Declaration extends EasyFlex
         'end_of_work_employee'                  => 'rf_decl_eindewerk_fw',
         'end_of_work_relation'                  => 'rf_decl_eindewerk_rl',
         'overwork_type'                         => 'rf_decl_tvt',
+        'overwork_type_irregular'               => 'rf_decl_tvt_onr',
         'default_wage_type_number'              => 'rf_decl_default_lcnr',
         'default_wage_type_percentage_employee' => 'rf_decl_default_lc_percfw',
         'default_wage_type_percentage_relation' => 'rf_decl_default_lc_percrl',
         'default_wage_type_change_employee'     => 'rf_decl_default_lc_wijzig_fw',
         'default_wage_type_change_relation'     => 'rf_decl_default_lc_wijzig_rl',
+        'request_id'                            => 'rf_decl_aanvraagnr',
         'vacancy_id'                            => 'rf_decl_jobnr',
         'vacancy_function'                      => 'rf_decl_job_functie',
         'vacancy_start_date'                    => 'rf_decl_job_startdatum',
@@ -49,6 +51,8 @@ class Declaration extends EasyFlex
         'employee_last_name'                    => 'rf_decl_flexwerker_achternaam',
         'relation_id'                           => 'rf_decl_relatie_idnr',
         'relation'                              => 'rf_decl_relatie',
+        'approved_on'                           => 'rf_decl_accoord_op',
+        'approved_by'                           => 'rf_decl_accoord_door',
     ];
 
     /**

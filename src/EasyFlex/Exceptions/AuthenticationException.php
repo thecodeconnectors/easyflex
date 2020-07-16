@@ -2,7 +2,7 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Exceptions;
 
-class AuthenticationException extends \InvalidArgumentException
+class AuthenticationException extends EasyFlexException
 {
 
 }
