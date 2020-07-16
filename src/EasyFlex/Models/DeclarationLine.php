@@ -8,10 +8,9 @@ class DeclarationLine extends EasyFlex
      * @var []
      */
     protected $fields = [
-        'id'         => 'fw_declaratie_regel_idnr',
-        'date'       => 'fw_declaratie_datum',
-        'start_time' => 'fw_declaratie_starttijd',
-        'end_time'   => 'fw_declaratie_eindtijd',
-        'hour_type'  => 'fw_declaratie_urensoort',
+        'declaration_id' => 'rf_decl_idnr',
+        'hours'          => 'rf_decl_uren',
+        'compensation'   => 'rf_decl_vergoedingen',
+        'withdrawal'     => 'rf_decl_opnamen',
     ];
 }
