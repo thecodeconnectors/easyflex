@@ -4,6 +4,9 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 class CompanyDetails extends EasyFlex
 {
+    /**
+     * @var string[]
+     */
     protected $fields = [
         'relation_number'                              => 'rl_relatienummer',
         'debtors_number'                               => 'rl_debiteurennummer',

@@ -15,10 +15,14 @@ class DeclarationMoney extends EasyFlex
         'wage_type_paper_text'   => 'rf_decl_lc_loonslip_tekst',
         'wage_type_invoice_text' => 'rf_decl_lc_factuur_tekst',
         'wage_type_unit'         => 'rf_decl_lc_eenheid',
-        'employee_amount'        => 'rf_decl_geld_bedrag_fw',
-        'relation_amount'        => 'rf_decl_geld_bedrag_rl',
+        'quantity_employee'      => 'rf_decl_geld_aantal_fw',
+        'quantity_relation'      => 'rf_decl_geld_aantal_rl',
+        'amount_employee'        => 'rf_decl_geld_bedrag_fw',
+        'amount_relation'        => 'rf_decl_geld_bedrag_rl',
         'cost_center'            => 'rf_decl_geld_kostenplaats',
         'wage_breakdown_id'      => 'rf_decl_geld_loonspecificatie_idnr',
         'invoice_id'             => 'rf_decl_geld_factuur_idnr',
     ];
 }
+
+

@@ -4,8 +4,14 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 class DeclarationWageComponent extends EasyFlex
 {
+
+    public const TYPE_HOURS = 'uren';
+    public const TYPE_COMPENSATION = 'vergoeding';
+    public const TYPE_RESERVATION_HOURS = 'reservering_uren';
+    public const TYPE_RESERVATION_MONEY = 'reservering_geld';
+
     /**
-     * @var []
+     * @var string[]
      */
     protected $fields = [
         'id'                             => 'rf_decl_lc_idnr',
