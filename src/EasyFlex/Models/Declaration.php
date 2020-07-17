@@ -12,6 +12,29 @@ class Declaration extends EasyFlex
     public const PERIOD_TYPE_FOUR_WEEKS = '4-weken';
     public const PERIOD_TYPE_MONTH = 'maand';
 
+    public const STATUS_MISSING = 'ontbreekt';
+    public const STATUS_INCOMPLETE = 'onvolledig';
+    public const STATUS_FINISHED = 'gereed';
+    public const STATUS_WAITING = 'wachten';
+    public const STATUS_APPROVED = 'geaccordeerd';
+    public const STATUS_EDITTING = 'bewerking';
+    public const STATUS_PROCESSED = 'afgewikkeld';
+
+    public const STATUS_USER_NEW = 'nieuw';
+    public const STATUS_USER_INPROGRESS = 'bezig';
+    public const STATUS_USER_FINISHED = 'gereed';
+    public const STATUS_USER_APPROVED = 'akkoord';
+    public const STATUS_USER_PROCESSED = 'verwerkt';
+
+    public const STATUS_FINISHED_APPROVAL_NOT_NEEDED = -1;
+    public const STATUS_FINISHED_NEEDS_APPROVAL = 0;
+    public const STATUS_FINISHED_APPROVED = 1;
+
+    public const END_OF_WORK_NOT_MARKED = 0;
+    public const END_OF_WORK_MARKED = 1;
+    public const OVERTIME_PAY = 'uitbetalen';
+    public const OVERTIME_SAVE = 'sparen';
+    
     /**
      * @var []
      */

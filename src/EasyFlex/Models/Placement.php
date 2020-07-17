@@ -4,6 +4,9 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 class Placement extends EasyFlex
 {
+    public const HAS_DECLARATIONS_NO = 'nee';
+    public const HAS_DECLARATIONS_YES = 'ja';
+
     /**
      * @var array
      */
