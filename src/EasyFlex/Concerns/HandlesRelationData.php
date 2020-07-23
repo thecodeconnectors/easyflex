@@ -4,12 +4,12 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\User;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\DeclarationLine;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\ContactCommunication;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\DeclarationWageComponent;
 
 /**
  * Trait HandlesRelationData
@@ -22,7 +22,7 @@ trait HandlesRelationData
     /**
      * @param array $parameters
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|Declaration[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
@@ -36,9 +36,9 @@ trait HandlesRelationData
     }
 
     /**
-     * @param array $parameters
+     * @param array $declarationIds
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|DeclarationLine[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
@@ -56,10 +56,30 @@ trait HandlesRelationData
     }
 
     /**
+     * @param $declarationId
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|DeclarationWageComponent[]
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function wageComponents($declarationId)
+    {
+        $parameters = [
+            'rf_decl_idnr' => $declarationId,
+        ];
+
+        return $this
+            ->call('rf_declaratie_looncomponent', $parameters)
+            ->getResponse()
+            ->toCollection(DeclarationWageComponent::class);
+    }
+
+    /**
      * @param null $id
      * @param int  $status
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|Contact[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
@@ -82,7 +102,7 @@ trait HandlesRelationData
      * @param int  $type
      * @param null $relationId
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|ContactCommunication[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
@@ -104,7 +124,7 @@ trait HandlesRelationData
     /**
      * @param null $id
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|Placement[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
@@ -124,7 +144,7 @@ trait HandlesRelationData
     /**
      * @param null $id
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|User[]
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException

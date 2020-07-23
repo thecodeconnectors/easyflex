@@ -24,7 +24,7 @@ class DeclarationWageComponent extends EasyFlex
         'wage_type_percentage_relation'  => 'rf_decl_lc_percentage_rl',
         'wage_type_hourly_wage'          => 'rf_decl_lc_uurloon',
         'wage_type_tariff'               => 'rf_decl_lc_tarief',
-        'wage_type_explanation–relation' => 'rf_decl_lc_toelichting_rl',
+        'wage_type_explanation_relation' => 'rf_decl_lc_toelichting_rl',
         'wage_type_name_short'           => 'rf_decl_lc_naam_kort_rl',
         'wage_type_explanation_employee' => 'rf_decl_lc_toelichting_fw',
         'wage_type_name_short_employee'  => 'rf_decl_lc_naam_kort_fw',
