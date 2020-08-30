@@ -4,6 +4,8 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 class Reservations extends EasyFlex
 {
+    public const WAGE_TYPE_HOLIDAYS = 'vakantiedagen';
+
     /**
      * @var array
      */
