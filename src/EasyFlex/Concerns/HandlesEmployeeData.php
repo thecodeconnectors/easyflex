@@ -2,8 +2,8 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\Employee;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 
 /**
  * Trait HandlesRelationData
@@ -12,5 +12,19 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Models\Employee;
  */
 trait HandlesEmployeeData
 {
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function reservations(): EasyFlexCollection
+    {
+        return $this
+            ->call('fw_reserveringen')
+            ->getResponse()
+            ->toCollection(Reservations::class);
+    }
 
 }
