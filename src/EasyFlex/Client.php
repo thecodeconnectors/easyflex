@@ -12,6 +12,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingSessionException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
 
@@ -228,6 +229,7 @@ class Client
         $this->checkServiceOffline($fault);
         $this->checkLicenseError($fault);
         $this->checkSessionError($fault);
+        $this->checkInvalidParameter($fault);
 
         $code    = $fault->faultstring;
         $message = (isset($fault->detail, $fault->detail->message)) ? $fault->detail->message : '';
@@ -281,6 +283,21 @@ class Client
     {
         if (strpos($fault->faultstring, " object has no 'session' property") !== false) {
             throw new MissingSessionException((string)$fault->faultstring);
+        }
+    }
+
+    /**
+     * @param \SoapFault $fault
+     * @param array      $parameters
+     *
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException
+     */
+    protected function checkInvalidParameter(SoapFault $fault, $parameters = []): void
+    {
+        if (strpos($fault->faultstring, "Parameterwaarde niet geldig") !== false) {
+            $exception = new InvalidParameterException($fault->faultstring);
+            $exception->setParameters($parameters);
+            throw $exception;
         }
     }
 
