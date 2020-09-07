@@ -294,10 +294,8 @@ class Client
      */
     protected function checkInvalidParameter(SoapFault $fault, $parameters = []): void
     {
-        if (strpos($fault->faultstring, "Parameterwaarde niet geldig") !== false) {
-            $exception = new InvalidParameterException($fault->faultstring);
-            $exception->setParameters($parameters);
-            throw $exception;
+        if (strpos($fault->faultstring, '39043') !== false) {
+            throw new InvalidParameterException($fault->detail->detail);
         }
     }
 
