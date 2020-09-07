@@ -150,9 +150,10 @@ class Client
      */
     public function call($method, $parameters = [], $fields = []): self
     {
+        // init the old school soap client
+        $client = $this->soapClient();
+
         try {
-            // init the old school soap client
-            $client = $this->soapClient();
 
             // construct the complete payload we need to send
             $payload = [$method => $this->constructPayload($parameters, $fields)];

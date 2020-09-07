@@ -21,8 +21,10 @@ class DeclarationLine extends EasyFlex
     {
         $items = [];
 
-        foreach ((array)$this->hours as $hour) {
-            $items[] = new DeclarationHour($hour);
+        if (isset($this->rf_decl_uren->item)) {
+            foreach ((array)$this->rf_decl_uren->item as $hour) {
+                $items[] = new DeclarationHour((array)$hour);
+            }
         }
 
         return new EasyFlexCollection($items);
@@ -35,8 +37,10 @@ class DeclarationLine extends EasyFlex
     {
         $items = [];
 
-        foreach ((array)$this->compensation as $compensation) {
-            $items[] = new DeclarationMoney($compensation);
+        if (isset($this->rf_decl_vergoedingen->item)) {
+            foreach ((array)$this->rf_decl_vergoedingen->item as $compensation) {
+                $items[] = new DeclarationMoney((array)$compensation);
+            }
         }
 
         return new EasyFlexCollection($items);
@@ -49,8 +53,10 @@ class DeclarationLine extends EasyFlex
     {
         $items = [];
 
-        foreach ((array)$this->withdrawal as $withdrawal) {
-            $items[] = new DeclarationWithdrawal($withdrawal);
+        if (isset($this->rf_decl_opnamen->item)) {
+            foreach ((array)$this->rf_decl_opnamen->item as $withdrawal) {
+                $items[] = new DeclarationWithdrawal((array)$withdrawal);
+            }
         }
 
         return new EasyFlexCollection($items);
