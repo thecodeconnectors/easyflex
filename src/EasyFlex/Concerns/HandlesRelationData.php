@@ -142,6 +142,26 @@ trait HandlesRelationData
     }
 
     /**
+     * @param $id
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     */
+    public function placement($id): Placement
+    {
+        $parameters = [
+            'rl_plaatsing_idnr' => $id,
+        ];
+
+        return $this
+            ->call('rl_plaatsingen', $parameters)
+            ->getResponse()
+            ->toModel(Placement::class);
+    }
+
+    /**
      * @param null $id
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|User[]

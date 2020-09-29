@@ -23,6 +23,7 @@ class User extends EasyFlex
         'declarations'        => 'ws_user_urendeclaraties',
         'declaration_set'     => 'ws_user_decl_invoeren',
         'declaration_approve' => 'ws_user_decl_accorderen',
+        'costs_center'        => 'ws_user_decl_kostenplaatsen',
     ];
 
     /**

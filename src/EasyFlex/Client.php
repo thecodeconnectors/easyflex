@@ -189,7 +189,7 @@ class Client
     public function soapClient()
     {
         if ( ! $this->soapClient) {
-            $this->soapClient = new SoapClient($this->getWsdl(), ['trace' => 1]);
+            $this->soapClient = new SoapClient($this->getWsdl()); // , ['trace' => 1]
         }
 
         return $this->soapClient;
