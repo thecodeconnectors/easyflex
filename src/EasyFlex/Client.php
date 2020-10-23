@@ -13,6 +13,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingSessionException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
 
@@ -231,6 +232,7 @@ class Client
         $this->checkLicenseError($fault);
         $this->checkSessionError($fault);
         $this->checkInvalidParameter($fault);
+        $this->checkUserLockedOut($fault);
 
         $code    = $fault->faultstring;
         $message = (isset($fault->detail, $fault->detail->message)) ? $fault->detail->message : '';
@@ -297,6 +299,19 @@ class Client
     {
         if (strpos($fault->faultstring, '39043') !== false) {
             throw new InvalidParameterException($fault->detail->detail);
+        }
+    }
+
+    /**
+     * @param \SoapFault $fault
+     * @param array      $parameters
+     *
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException
+     */
+    protected function checkUserLockedOut(SoapFault $fault, $parameters = []): void
+    {
+        if (strpos($fault->faultstring, '39031') !== false) {
+            throw new UserLockedOutException($fault->detail->message);
         }
     }
 
