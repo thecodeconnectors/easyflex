@@ -176,7 +176,7 @@ class Client
 
             // try to throw a meaningfull exception instead of
             // only an arbitrary code with aDutch message
-            $this->handleSoapFault($fault);
+            $this->handleSoapFault($fault, $parameters);
         }
 
         // pass back the client so we can use it again with the new session key
@@ -221,18 +221,20 @@ class Client
 
     /**
      * @param \SoapFault $fault
+     * @param array      $parameters
      *
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
+     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    protected function handleSoapFault(SoapFault $fault): void
+    protected function handleSoapFault(SoapFault $fault, array $parameters = []): void
     {
-        $this->checkServiceOffline($fault);
-        $this->checkLicenseError($fault);
-        $this->checkSessionError($fault);
-        $this->checkInvalidParameter($fault);
-        $this->checkUserLockedOut($fault);
+        $this->checkServiceOffline($fault, $parameters);
+        $this->checkLicenseError($fault, $parameters);
+        $this->checkSessionError($fault, $parameters);
+        $this->checkInvalidParameter($fault, $parameters);
+        $this->checkUserLockedOut($fault, $parameters);
 
         $code    = $fault->faultstring;
         $message = (isset($fault->detail, $fault->detail->message)) ? $fault->detail->message : '';
@@ -255,10 +257,11 @@ class Client
 
     /**
      * @param \SoapFault $fault
+     * @param array      $parameters
      *
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
-    protected function checkServiceOffline(SoapFault $fault): void
+    protected function checkServiceOffline(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, "Start tag expected") !== false) {
             throw new WebserviceOfflineException("The webservice is offline");
@@ -267,10 +270,9 @@ class Client
 
     /**
      * @param \SoapFault $fault
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException
+     * @param array      $parameters
      */
-    public function checkLicenseError(SoapFault $fault): void
+    public function checkLicenseError(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, " object has no 'license' property") !== false) {
             throw new MissingLicenseException((string)$fault->faultstring);
@@ -279,10 +281,9 @@ class Client
 
     /**
      * @param \SoapFault $fault
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException
+     * @param array      $parameters
      */
-    public function checkSessionError(SoapFault $fault): void
+    public function checkSessionError(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, " object has no 'session' property") !== false) {
             throw new MissingSessionException((string)$fault->faultstring);
@@ -311,7 +312,11 @@ class Client
     protected function checkUserLockedOut(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, '39031') !== false) {
-            throw new UserLockedOutException($fault->detail->message);
+            $exception = new UserLockedOutException($fault->detail->message);
+
+            $exception->setParameters($parameters);
+
+            throw $exception;
         }
     }
 
