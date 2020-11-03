@@ -6,6 +6,7 @@ use SoapFault;
 use SoapClient;
 use TheCodeConnectors\EasyFlex\EasyFlex\Errors\Messages;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\AuthenticatesUsers;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\DuplicateUserNameException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
@@ -314,6 +315,10 @@ class Client
     protected function checkInvalidParameter(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, '39043') !== false) {
+            if($fault->detail->detail === 'duplicate username'){
+                throw new DuplicateUserNameException();
+            }
+
             throw new InvalidParameterException($fault->detail->detail);
         }
     }
