@@ -107,18 +107,20 @@ trait HandlesRelationData
     }
 
     /**
-     * @param null $id
+     * @param null $placementId
+     * @param null $relationId
      *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|Placement[]
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      */
-    public function placements($id = null): EasyFlexCollection
+    public function placements($placementId = null, $relationId = null): EasyFlexCollection
     {
         $parameters = [
-            'rl_plaatsing_idnr' => $id,
+            'rl_plaatsing_idnr' => $placementId,
+            'rl_relatie_idnr'   => $relationId,
         ];
 
         return $this
-            ->call('rl_plaatsingen', $parameters)
+            ->call('rl_plaatsingen', array_filter($parameters))
             ->getResponse()
             ->toCollection(Placement::class);
     }
