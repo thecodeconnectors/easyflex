@@ -116,6 +116,16 @@ class Client
     }
 
     /**
+     * @param $session
+     *
+     * @return string
+     */
+    public function setSession($session): string
+    {
+        return $this->session = $session;
+    }
+
+    /**
      * @return string
      */
     public function getSession(): string
