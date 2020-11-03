@@ -129,7 +129,7 @@ trait AuthenticatesUsers
      */
     protected function containsRequiredPasswordCharacters($string)
     {
-        return preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/u', $string)
+        return preg_match('/[\'^£$%&*()}{@#~!?><>,|=_+¬-]/u', $string)
             && preg_match('/[A-Za-z]/', $string)
             && preg_match('/\d/', $string);
     }
