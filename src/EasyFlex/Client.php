@@ -158,7 +158,7 @@ class Client
      *
      * @return $this
      */
-    public function call($method, $parameters = [], $fields = []): self
+    public function call($method, $parameters = [], $fields = [])
     {
         // init the old school soap client
         $client = $this->soapClient();
