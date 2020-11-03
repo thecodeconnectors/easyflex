@@ -13,6 +13,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingSessionException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\SessionExpiredException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
@@ -164,7 +165,7 @@ class Client
         try {
 
             // construct the complete payload we need to send
-            $payload = [$method => $this->constructPayload($parameters, $fields)];
+            $payload = [$method => $this->constructPayload($method, $parameters, $fields)];
 
             // call the soap service and set the response
             $this->response = new Response($client->__soapCall($method, $payload), $this);
@@ -205,27 +206,34 @@ class Client
     }
 
     /**
+     * @param       $method
      * @param array $parameters
      * @param array $fields
      *
      * @return array
      */
-    public function constructPayload($parameters = [], $fields = []): array
+    public function constructPayload($method, $parameters = [], $fields = []): array
     {
         $fields = array_fill_keys($fields, '');
 
-        if ($this->session) {
-            // only add the session if we have one,
-            // otherwise we get a invalid session error, when authenticating
+        if ($this->session && $method === 'wm_inloggen_update') {
+            // stupid exception of adding the session parameter
             $parameters['session'] = $this->session;
-            //$fields['session']     = $this->session;
         }
 
-        return [
+        $payload = [
             'license'    => $this->license,
             'parameters' => array_filter($parameters),
             'fields'     => array_filter($fields) ?: null,
         ];
+
+        if ($this->session && $method !== 'wm_inloggen_update') {
+            // only add the session if we have one,
+            // otherwise we get a invalid session error, when authenticating
+            $payload['session'] = $this->session;
+        }
+
+        return $payload;
     }
 
     /**
@@ -287,6 +295,10 @@ class Client
      */
     public function checkSessionError(SoapFault $fault, $parameters = []): void
     {
+        if (strpos($fault->faultstring, '39053') !== false) {
+            throw new SessionExpiredException((string)$fault->faultstring);
+        }
+
         if (strpos($fault->faultstring, " object has no 'session' property") !== false) {
             throw new MissingSessionException((string)$fault->faultstring);
         }
