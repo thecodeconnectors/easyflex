@@ -21,9 +21,8 @@ class EasyFlexException extends \Exception
      */
     public function __construct(string $code, string $message = null, string $details = null)
     {
-        $this->setEasyFlexError($code, $message, $details);
-
-        parent::__construct($message ?: 'EasyFlex Error');
+        $this->setEasyFlexError($code, $message . ' ' . $details, $details);
+        parent::__construct($message . ' ' . $details ?: 'EasyFlex Error');
     }
 
     /**

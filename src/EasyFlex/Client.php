@@ -264,6 +264,7 @@ class Client
 
         // we were not able to present a usefull message,
         // so pass throw whatever we got from Easyflex.
+
         throw new EasyFlexException($code, $message, $detail ?? $code);
     }
 
