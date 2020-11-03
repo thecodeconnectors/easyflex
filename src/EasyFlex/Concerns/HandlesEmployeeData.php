@@ -2,7 +2,6 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
-use App\Models\EasyFlex\Declaration\Declaration;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 
@@ -16,9 +15,6 @@ trait HandlesEmployeeData
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function reservations(): EasyFlexCollection
     {
@@ -31,10 +27,6 @@ trait HandlesEmployeeData
     /**
      * @param       $id
      * @param array $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function updateDeclaration($id, array $parameters = [])
     {
@@ -48,10 +40,6 @@ trait HandlesEmployeeData
     /**
      * @param       $id
      * @param array $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function updateDeclarationLines($id, array $parameters = [])
     {

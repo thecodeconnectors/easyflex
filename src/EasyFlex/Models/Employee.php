@@ -101,18 +101,9 @@ class Employee extends EasyFlex
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function details()
     {
         return $this->client()->personalDetails();
     }
-
-    public function declarations()
-    {
-
-    }
-
 }

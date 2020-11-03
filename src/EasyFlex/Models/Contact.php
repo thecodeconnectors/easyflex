@@ -30,10 +30,7 @@ class Contact extends EasyFlex
     ];
 
     /**
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact[]|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      */
     public function get()
     {
@@ -60,9 +57,6 @@ class Contact extends EasyFlex
      * @param int $type
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function communication($type = ContactCommunication::TYPE_EMAIL)
     {
@@ -71,9 +65,6 @@ class Contact extends EasyFlex
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function email()
     {
@@ -82,9 +73,6 @@ class Contact extends EasyFlex
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function phone()
     {

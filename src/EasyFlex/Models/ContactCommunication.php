@@ -24,10 +24,7 @@ class ContactCommunication extends EasyFlex
     ];
 
     /**
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\ContactCommunication[]|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
      */
     public function get()
     {

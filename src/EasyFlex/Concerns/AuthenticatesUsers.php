@@ -101,7 +101,7 @@ trait AuthenticatesUsers
         // min 6 and max 32 characters
         if ( ! $this->containsRequiredPasswordCharacters($passsword)
             || strpos($passsword, ' ') !== false
-            || ! $this->stringLengthIsCorrect($passsword, 6, 32)
+            || ! $this->stringLengthIsCorrect($passsword, 8, 32)
         ) {
             throw new InvalidPasswordException();
         }

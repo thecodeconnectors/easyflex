@@ -18,9 +18,6 @@ trait HandlesGlobalEasyFlexData
      * @param null $id
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function personalDetails($id = null): EasyFlex
     {
@@ -38,9 +35,6 @@ trait HandlesGlobalEasyFlexData
      * @param null $id
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function companyDetails($id = null)
     {

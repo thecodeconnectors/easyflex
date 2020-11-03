@@ -17,9 +17,6 @@ class Relation extends EasyFlex
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function details()
     {
@@ -28,33 +25,35 @@ class Relation extends EasyFlex
 
     /**
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function companyDetails()
     {
         return $this->client()->companyDetails();
     }
 
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact[]|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     */
     public function contacts()
     {
         return $this->client()->contacts();
     }
 
+    /**
+     * @param $id
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\Contact[]|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     */
     public function contact($id)
     {
         return $this->client()->contacts($id);
     }
 
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|\TheCodeConnectors\EasyFlex\EasyFlex\Models\Placement[]
+     */
     public function placements()
     {
         return $this->client()->placements();
     }
-
-    public function declarations()
-    {
-
-    }
-
 }

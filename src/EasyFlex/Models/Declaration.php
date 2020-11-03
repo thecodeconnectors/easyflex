@@ -34,7 +34,7 @@ class Declaration extends EasyFlex
     public const END_OF_WORK_MARKED = 1;
     public const OVERTIME_PAY = 'uitbetalen';
     public const OVERTIME_SAVE = 'sparen';
-    
+
     /**
      * @var []
      */
@@ -82,9 +82,6 @@ class Declaration extends EasyFlex
      * @param null $ids
      *
      * @return mixed
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function get($ids = null)
     {

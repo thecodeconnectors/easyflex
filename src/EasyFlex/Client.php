@@ -155,9 +155,6 @@ class Client
      * @param array $fields
      *
      * @return $this
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     public function call($method, $parameters = [], $fields = []): self
     {
@@ -197,7 +194,6 @@ class Client
 
     /**
      * @return \SoapClient|\TheCodeConnectors\EasyFlex\Tests\Mock\SoapClient
-     * @throws \SoapFault
      */
     public function soapClient()
     {
@@ -216,29 +212,25 @@ class Client
      */
     public function constructPayload($parameters = [], $fields = []): array
     {
-        $payload = [
-            'license'    => $this->license,
-            'parameters' => array_filter($parameters),
-            'fields'     => $fields ? array_fill_keys($fields, '') : null,
-        ];
+        $fields = array_fill_keys($fields, '');
 
         if ($this->session) {
             // only add the session if we have one,
             // otherwise we get a invalid session error, when authenticating
-            $payload['session'] = $this->session;
+            $parameters['session'] = $this->session;
+            //$fields['session']     = $this->session;
         }
 
-        return $payload;
+        return [
+            'license'    => $this->license,
+            'parameters' => array_filter($parameters),
+            'fields'     => array_filter($fields) ?: null,
+        ];
     }
 
     /**
      * @param \SoapFault $fault
      * @param array      $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     protected function handleSoapFault(SoapFault $fault, array $parameters = []): void
     {
@@ -270,8 +262,6 @@ class Client
     /**
      * @param \SoapFault $fault
      * @param array      $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException
      */
     protected function checkServiceOffline(SoapFault $fault, $parameters = []): void
     {
@@ -318,8 +308,6 @@ class Client
     /**
      * @param \SoapFault $fault
      * @param array      $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException
      */
     protected function checkUserLockedOut(SoapFault $fault, $parameters = []): void
     {
@@ -335,8 +323,6 @@ class Client
     /**
      * @param       $detail
      * @param array $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      */
     protected function checkChangePasswordRequirement($detail, $parameters = []): void
     {
