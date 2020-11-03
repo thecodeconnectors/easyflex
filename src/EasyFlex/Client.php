@@ -168,6 +168,8 @@ class Client
             // set the soap request we passed for easier debugging
             $this->request = $client->__getLastRequest();
 
+            $this->checkChangePasswordRequirement('', $parameters);
+
         } catch (SoapFault $fault) {
 
             // we tried, but failed
@@ -242,7 +244,7 @@ class Client
 
         // weird message when user need to change
         // their password is hidden in $detail
-        $this->checkChangePasswordRequirement($detail);
+        $this->checkChangePasswordRequirement($detail, $parameters);
 
         if ($exception = Messages::custom_exception($code)) {
             // then we might have a custom exception
@@ -321,14 +323,20 @@ class Client
     }
 
     /**
-     * @param $detail
+     * @param       $detail
+     * @param array $parameters
      *
      * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException
      */
-    protected function checkChangePasswordRequirement($detail): void
+    protected function checkChangePasswordRequirement($detail, $parameters = []): void
     {
-        if ($detail === 'change password') {
-            throw new RequireChangePasswordException();
+        if ($detail === 'change password' || substr($parameters['db_inlognaam'] ?? '', 0, 3) === 'EF_') {
+            $exception = new RequireChangePasswordException();
+
+            $exception->setParameters($parameters);
+            $exception->setClient($this);
+
+            throw $exception;
         }
     }
 }
