@@ -21,9 +21,14 @@ class DeclarationLine extends EasyFlex
     {
         $items = [];
 
+        // easy flex makes a mess of returning 1 or more items
         if (isset($this->rf_decl_uren->item)) {
-            foreach ((array)$this->rf_decl_uren->item as $hour) {
-                $items[] = new DeclarationHour((array)$hour);
+            if (is_array($this->rf_decl_uren->item)) {
+                foreach ((array)$this->rf_decl_uren->item as $hour) {
+                    $items[] = new DeclarationHour((array)$hour);
+                }
+            } else {
+                $items[] = new DeclarationHour((array)$this->rf_decl_uren->item);
             }
         }
 
@@ -38,8 +43,12 @@ class DeclarationLine extends EasyFlex
         $items = [];
 
         if (isset($this->rf_decl_vergoedingen->item)) {
-            foreach ((array)$this->rf_decl_vergoedingen->item as $compensation) {
-                $items[] = new DeclarationMoney((array)$compensation);
+            if (is_array($this->rf_decl_vergoedingen->item)) {
+                foreach ((array)$this->rf_decl_vergoedingen->item as $compensation) {
+                    $items[] = new DeclarationMoney((array)$compensation);
+                }
+            } else {
+                $items[] = new DeclarationMoney((array)$this->rf_decl_vergoedingen->item);
             }
         }
 
@@ -54,8 +63,12 @@ class DeclarationLine extends EasyFlex
         $items = [];
 
         if (isset($this->rf_decl_opnamen->item)) {
-            foreach ((array)$this->rf_decl_opnamen->item as $withdrawal) {
-                $items[] = new DeclarationWithdrawal((array)$withdrawal);
+            if (is_array($this->rf_decl_opnamen->item)) {
+                foreach ((array)$this->rf_decl_opnamen->item as $withdrawal) {
+                    $items[] = new DeclarationWithdrawal((array)$withdrawal);
+                }
+            } else {
+                $items[] = new DeclarationWithdrawal((array)$this->rf_decl_opnamen->item);
             }
         }
 
