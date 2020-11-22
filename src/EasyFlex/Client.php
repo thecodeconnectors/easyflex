@@ -220,14 +220,15 @@ class Client
         if ($this->session && $method === 'wm_inloggen_update') {
             // stupid exception of adding the session parameter
             $parameters['session'] = $this->session;
-        }
-
-        foreach ($fields as $k => $v) {
-            if ($v === null) {
-                // we van not use array filter here,
-                // since that will filter out the  keys with '',
-                // and we need to pass them
-                unset($fields[$k]);
+            $fields                = array_filter($fields);
+        } else {
+            foreach ($fields as $k => $v) {
+                if ($v === null) {
+                    // we can not use array filter here on calls other then wm_inloggen_update
+                    // since that will filter out the keys with '',
+                    // and we need to pass them
+                    unset($fields[$k]);
+                }
             }
         }
 
