@@ -222,10 +222,19 @@ class Client
             $parameters['session'] = $this->session;
         }
 
+        foreach ($fields as $k => $v) {
+            if ($v === null) {
+                // we van not use array filter here,
+                // since that will filter out the  keys with '',
+                // and we need to pass them
+                unset($fields[$k]);
+            }
+        }
+
         $payload = [
             'license'    => $this->license,
             'parameters' => array_filter($parameters),
-            'fields'     => array_filter($fields) ?: null,
+            'fields'     => $fields ?: null,
         ];
 
         if ($this->session && $method !== 'wm_inloggen_update') {
@@ -315,7 +324,7 @@ class Client
     protected function checkInvalidParameter(SoapFault $fault, $parameters = []): void
     {
         if (strpos($fault->faultstring, '39043') !== false) {
-            if($fault->detail->detail === 'duplicate username'){
+            if ($fault->detail->detail === 'duplicate username') {
                 throw new DuplicateUserNameException();
             }
 

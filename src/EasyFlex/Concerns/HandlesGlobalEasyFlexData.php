@@ -15,18 +15,19 @@ trait HandlesGlobalEasyFlexData
 {
 
     /**
-     * @param null $id
+     * @param null  $id
+     * @param array $fields
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
      */
-    public function personalDetails($id = null): EasyFlex
+    public function personalDetails($id = null, $fields = []): EasyFlex
     {
         $parameters = [
             'fw_flexwerker_idnr' => $id,
         ];
 
         return $this
-            ->call('fw_persoonsgegevens', $parameters)
+            ->call('fw_persoonsgegevens', $parameters, $fields)
             ->getResponse()
             ->toModel(Employee::class);
     }
