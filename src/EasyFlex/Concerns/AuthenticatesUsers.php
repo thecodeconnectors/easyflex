@@ -129,8 +129,63 @@ trait AuthenticatesUsers
      */
     protected function containsRequiredPasswordCharacters($string)
     {
-        return preg_match('/[\'^£$%&*()}{@#~!?><>,|=_+¬-]/u', $string)
+        $specials = [
+            '!',
+            '@',
+            '#',
+            '$',
+            '%',
+            '^',
+            '&',
+            '*',
+            '(',
+            ')',
+            '-',
+            '_',
+            '+',
+            '=',
+            '{',
+            '}',
+            '[',
+            ']',
+            ':',
+            ';',
+            '"',
+            "'",
+            '|',
+            '\'',
+            '<',
+            '>',
+            ',',
+            '.',
+            '?',
+            '/',
+            '`',
+            '~',
+            '±',
+            '§',
+        ];
+
+        return static::contains($string, $specials)
             && preg_match('/[A-Za-z]/', $string)
             && preg_match('/\d/', $string);
+    }
+
+    /**
+     * Determine if a given string contains a given substring.
+     *
+     * @param  string  $haystack
+     * @param  string|string[]  $needles
+     * @return bool
+     */
+    public static function contains($haystack, $needles)
+    {
+        foreach ((array) $needles as $needle) {
+            if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
