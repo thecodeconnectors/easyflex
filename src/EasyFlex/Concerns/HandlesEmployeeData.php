@@ -34,7 +34,7 @@ trait HandlesEmployeeData
 
         $this->call('rf_declaratie_update', $parameters);
 
-        // if anything goes wrong we get an exception instead.s
+        // if anything goes wrong we get an exception instead.
     }
 
     /**

@@ -13,16 +13,4 @@ abstract class EasyFlex implements TransfersEasyFlexData, Arrayable
 {
     use InteractsWithEasyFlex, TransfersFieldsToEasyFlexFields, HasAttributes, HasFields;
 
-    //abstract function get();
-    //
-
-    public function create()
-    {
-
-    }
-
-    public function update()
-    {
-
-    }
 }

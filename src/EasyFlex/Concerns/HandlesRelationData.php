@@ -143,6 +143,23 @@ trait HandlesRelationData
     }
 
     /**
+     * @param $id
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\User|\TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     */
+    public function user($id): User
+    {
+        $parameters = [
+            'user_idnr' => $id,
+        ];
+
+        return $this
+            ->call('user_list', $parameters)
+            ->getResponse()
+            ->toModel(User::class);
+    }
+
+    /**
      * @param null $id
      *
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection|User[]
@@ -157,6 +174,83 @@ trait HandlesRelationData
             ->call('user_list', $parameters)
             ->getResponse()
             ->toCollection(User::class);
+    }
+
+    /**
+     * @param array )
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
+     */
+    public function createUser(array $parameters)
+    {
+        $creatable = [
+            'user_voorletters',
+            'user_tussenvoegsels',
+            'user_achternaam',
+            'ws_user_aantekening',
+            'ws_user_beheer',
+            'ws_user_persoonsgegevens',
+            'ws_user_urendeclaraties',
+            'ws_user_decl_invoeren',
+            'ws_user_decl_accorderen',
+            'ws_user_decl_kostenplaatsen',
+        ];
+
+        $parameters = array_intersect_key($parameters, array_combine($creatable, $creatable));
+
+        return $this
+            ->call('user_insert', $parameters)
+            ->getResponse()
+            ->toModel(User::class);
+    }
+
+    /**
+     * @param \TheCodeConnectors\EasyFlex\EasyFlex\Models\User|int $userOrId
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData
+     */
+    public function deleteUser($userOrId)
+    {
+        $id = $userOrId instanceof User ? $userOrId->user_idnr : $userOrId;
+
+        return $this->call('user_delete', ['user_idnr' => $id]);
+    }
+
+    /**
+     * @param       $id
+     * @param array $parameters
+     *
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData
+     */
+    public function updateUser($id, array $parameters = [])
+    {
+        $updatable = [
+            'user_naam',
+            'user_wachtwoord',
+            'user_voorletters',
+            'user_tussenvoegsels',
+            'user_achternaam',
+            'ws_user_aantekening',
+            'ws_user_beheer',
+            'ws_user_persoonsgegevens',
+            'ws_user_urendeclaraties',
+            'ws_user_decl_invoeren',
+            'ws_user_decl_accorderen',
+            'ws_user_decl_kostenplaatsen',
+        ];
+
+        $parameters              = array_intersect_key($parameters, array_combine($updatable, $updatable));
+        $parameters['user_idnr'] = $id;
+
+        if ($userName = $updatable['user_naam'] ?? null) {
+            $this->validateUserName($userName);
+        }
+
+        if ($password = $updatable['user_wachtwoord'] ?? null) {
+            $this->validatePassword($password);
+        }
+
+        return $this->call('user_update', $parameters);
     }
 
 }

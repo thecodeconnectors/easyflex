@@ -6,16 +6,16 @@ use SoapFault;
 use SoapClient;
 use TheCodeConnectors\EasyFlex\EasyFlex\Errors\Messages;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\AuthenticatesUsers;
-use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\DuplicateUserNameException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingSessionException;
-use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\SessionExpiredException;
-use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\DuplicateUserNameException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
 
@@ -339,7 +339,16 @@ class Client
      */
     protected function checkUserLockedOut(SoapFault $fault, $parameters = []): void
     {
-        if (strpos($fault->faultstring, '39031') !== false) {
+        $blockedAccountCodes = [
+            39021,
+            39022,
+            39023,
+            39031,
+            39032,
+            39033,
+        ];
+
+        if (in_array($fault->faultstring, $blockedAccountCodes)) {
             $exception = new UserLockedOutException($fault->detail->message);
 
             $exception->setParameters($parameters);
