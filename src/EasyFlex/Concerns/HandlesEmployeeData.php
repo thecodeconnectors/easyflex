@@ -4,6 +4,7 @@ namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\SalarySlip;
 
 /**
  * Trait HandlesRelationData
@@ -22,6 +23,31 @@ trait HandlesEmployeeData
             ->call('fw_reserveringen')
             ->getResponse()
             ->toCollection(Reservations::class);
+    }
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     */
+    public function salarySlips(): EasyFlexCollection
+    {
+        return $this
+            ->call('fw_loonspecificaties')
+            ->getResponse()
+            ->toCollection(SalarySlip::class);
+    }
+
+    /**
+     * @param $id
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex|SalarySlip
+     */
+    public function salarySlip($id): EasyFlexCollection
+    {
+        $parameters['fw_loonspecificatie_idnr'] = $id;
+
+        return $this
+            ->call('fw_loonspecificaties', $parameters)
+            ->getResponse()
+            ->toModel(SalarySlip::class);
     }
 
     /**
