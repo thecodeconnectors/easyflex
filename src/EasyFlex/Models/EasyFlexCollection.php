@@ -3,9 +3,6 @@
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Models;
 
 use ArrayIterator;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Contracts\Arrayable;
 
 class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess, \IteratorAggregate
@@ -147,25 +144,6 @@ class EasyFlexCollection implements \Countable , \JsonSerializable, \ArrayAccess
     public function __toString()
     {
         return $this->toJson();
-    }
-
-    /**
-     * Generates the pagination of items in an array or collection.
-     *
-     * @param array|Collection      $items
-     * @param int   $perPage
-     * @param int  $page
-     * @param array $options
-     *
-     * @return LengthAwarePaginator
-     */
-    public function paginate($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-        $items = $this->items instanceof Collection ? $this->items : Collection::make($this->items);
-
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
 }
