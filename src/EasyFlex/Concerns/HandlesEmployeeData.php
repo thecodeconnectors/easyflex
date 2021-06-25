@@ -40,7 +40,7 @@ trait HandlesEmployeeData
      * @param $id
      * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex|SalarySlip
      */
-    public function salarySlip($id): EasyFlexCollection
+    public function salarySlip($id): SalarySlip
     {
         $parameters['fw_loonspecificatie_idnr'] = $id;
 
