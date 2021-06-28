@@ -2,9 +2,10 @@
 
 namespace TheCodeConnectors\EasyFlex\EasyFlex\Concerns;
 
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
-use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\SalarySlip;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\AnnualStatement;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 
 /**
  * Trait HandlesRelationData
@@ -49,6 +50,32 @@ trait HandlesEmployeeData
             ->getResponse()
             ->toModel(SalarySlip::class);
     }
+
+    /**
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
+     */
+    public function annualStatements(): EasyFlexCollection
+    {
+        return $this
+            ->call('fw_jaaropgaven')
+            ->getResponse()
+            ->toCollection(AnnualStatement::class);
+    }
+
+    /**
+     * @param $id
+     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex|AnnualStatement
+     */
+    public function annualStatement($id): AnnualStatement
+    {
+        $parameters['fw_jaaropgave_idnr'] = $id;
+
+        return $this
+            ->call('fw_jaaropgaven', $parameters)
+            ->getResponse()
+            ->toModel(AnnualStatement::class);
+    }
+
 
     /**
      * @param       $id
