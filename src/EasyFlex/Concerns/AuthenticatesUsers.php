@@ -9,15 +9,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidUserNameException;
 
 trait AuthenticatesUsers
 {
-
-    /**
-     * @param string $userName
-     * @param string $password
-     * @param string $accountType
-     *
-     * @return $this|\TheCodeConnectors\EasyFlex\EasyFlex\Client
-     */
-    public function authenticate(string $userName, string $password, string $accountType): Client
+    public function authenticate(string $userName, string $password, string $accountType): self
     {
         $parameters = [
             'db_inlognaam'  => $userName,
@@ -30,13 +22,7 @@ trait AuthenticatesUsers
         return $this;
     }
 
-    /**
-     * @param string $userName
-     * @param string $password
-     *
-     * @return $this|\TheCodeConnectors\EasyFlex\EasyFlex\Client
-     */
-    public function updateCredentials(string $userName, string $password): Client
+    public function updateCredentials(string $userName, string $password): self
     {
         $parameters = [
             'db_inlognaam'  => $this->validateUserName($userName),
@@ -48,12 +34,6 @@ trait AuthenticatesUsers
         return $this;
     }
 
-    /**
-     * @param string $accountType
-     *
-     * @return string
-     * @throws InvalidAccountTypeException
-     */
     protected function validateAccountType(string $accountType): string
     {
         $accountTypes = [
@@ -68,11 +48,6 @@ trait AuthenticatesUsers
         throw new InvalidAccountTypeException($accountType);
     }
 
-    /**
-     * @param string $userName
-     *
-     * @return string
-     */
     public function validateUserName(string $userName): string
     {
         // cannot start with ef_
@@ -88,12 +63,6 @@ trait AuthenticatesUsers
         return $userName;
     }
 
-    /**
-     * @param string $passsword
-     *
-     * @return string
-     * @throws
-     */
     public function validatePassword(string $passsword): string
     {
         // must have at least 1 number, 1 letter, 1 special character
@@ -109,25 +78,13 @@ trait AuthenticatesUsers
         return $passsword;
     }
 
-    /**
-     * @param $string
-     * @param $min
-     * @param $max
-     *
-     * @return bool
-     */
-    protected function stringLengthIsCorrect($string, $min = 6, $max = 32)
+    protected function stringLengthIsCorrect($string, $min = 6, $max = 32): bool
     {
         $length = strlen($string);
         return ($length >= $min && $length <= $max);
     }
 
-    /**
-     * @param $string
-     *
-     * @return bool
-     */
-    protected function containsRequiredPasswordCharacters($string)
+    protected function containsRequiredPasswordCharacters($string): bool
     {
         $specials = [
             '!',
@@ -171,14 +128,7 @@ trait AuthenticatesUsers
             && preg_match('/\d/', $string);
     }
 
-    /**
-     * Determine if a given string contains a given substring.
-     *
-     * @param  string  $haystack
-     * @param  string|string[]  $needles
-     * @return bool
-     */
-    public static function contains($haystack, $needles)
+    public static function contains(string $haystack, $needles): bool
     {
         foreach ((array) $needles as $needle) {
             if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {

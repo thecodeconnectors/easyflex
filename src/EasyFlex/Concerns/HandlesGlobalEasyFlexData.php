@@ -6,21 +6,9 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Employee;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\CompanyDetails;
 
-/**
- * Trait HandlesRelationData
- *
- * @mixin \TheCodeConnectors\EasyFlex\EasyFlex\Client
- */
 trait HandlesGlobalEasyFlexData
 {
-
-    /**
-     * @param null  $id
-     * @param array $fields
-     *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     */
-    public function personalDetails($id = null, $fields = []): EasyFlex
+    public function personalDetails($id = null, array $fields = []): EasyFlex
     {
         $parameters = [
             'fw_flexwerker_idnr' => $id,
@@ -32,12 +20,7 @@ trait HandlesGlobalEasyFlexData
             ->toModel(Employee::class);
     }
 
-    /**
-     * @param null $id
-     *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex
-     */
-    public function companyDetails($id = null)
+    public function companyDetails($id = null): EasyFlex
     {
         $parameters = [
             'rl_relatie_idnr' => $id,
@@ -49,22 +32,14 @@ trait HandlesGlobalEasyFlexData
             ->toModel(CompanyDetails::class);
     }
 
-    /**
-     * EasyFlex wants some parameters to be wrapped in seperate arrays,
-     * where each parameter value is wrapped in a single array with the name in the key:
-     *
-     * $parameters = [
-     *    0 => [$name => 12345],
-     *    1 => [$name => 67890],
-     * ];
-     *
-     * @param array $parameters
-     * @param       $name
-     *
-     * @return array[]
-     */
-    public function toNamedParameters(array $parameters, $name)
+    public function toNamedParameters(array $parameters, string $name): array
     {
+        // EasyFlex wants some parameters to be wrapped in seperate arrays,
+        // where each parameter value is wrapped in a single array with the name in the key:
+        // $parameters = [
+        //     0 => [$name => 12345],
+        //     1 => [$name => 67890],
+        // ];
         return array_map(function ($parameters) use ($name) {
             return [$name => $parameters];
         }, $parameters);

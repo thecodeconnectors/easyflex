@@ -6,17 +6,8 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Models\Reservations;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\SalarySlip;
 
-/**
- * Trait HandlesRelationData
- *
- * @mixin \TheCodeConnectors\EasyFlex\EasyFlex\Client
- */
 trait HandlesEmployeeData
 {
-
-    /**
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     */
     public function reservations(): EasyFlexCollection
     {
         return $this
@@ -25,9 +16,6 @@ trait HandlesEmployeeData
             ->toCollection(Reservations::class);
     }
 
-    /**
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection
-     */
     public function salarySlips(): EasyFlexCollection
     {
         return $this
@@ -36,10 +24,6 @@ trait HandlesEmployeeData
             ->toCollection(SalarySlip::class);
     }
 
-    /**
-     * @param $id
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlex|SalarySlip
-     */
     public function salarySlip($id): SalarySlip
     {
         $parameters['fw_loonspecificatie_idnr'] = $id;
@@ -50,30 +34,17 @@ trait HandlesEmployeeData
             ->toModel(SalarySlip::class);
     }
 
-    /**
-     * @param       $id
-     * @param array $parameters
-     */
-    public function updateDeclaration($id, array $parameters = [])
+    public function updateDeclaration($id, array $parameters = []): void
     {
         $parameters['rf_decl_idnr'] = $id;
 
         $this->call('rf_declaratie_update', $parameters);
-
-        // if anything goes wrong we get an exception instead.
     }
 
-    /**
-     * @param       $id
-     * @param array $parameters
-     */
-    public function updateDeclarationLines($id, array $parameters = [])
+    public function updateDeclarationLines($id, array $parameters = []): void
     {
         $parameters['rf_decl_idnr'] = $id;
 
         $this->call('rf_declaratie_regels_update', $parameters);
-
-        // if anything goes wrong we get an exception instead.
     }
-
 }

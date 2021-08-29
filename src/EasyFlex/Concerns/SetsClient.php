@@ -6,16 +6,8 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Client;
 
 trait SetsClient
 {
-    /**
-     * @var array
-     */
-    protected $client = [];
+    protected Client $client;
 
-    /**
-     * @param \TheCodeConnectors\EasyFlex\EasyFlex\Client $client
-     *
-     * @return $this
-     */
     public function setClient(Client $client)
     {
         $this->client = $client;
@@ -23,12 +15,8 @@ trait SetsClient
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getClient()
+    public function getClient(): Client
     {
         return $this->client;
     }
-
 }

@@ -19,69 +19,34 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\DuplicateUserNameException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\WebserviceOfflineException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\RequireChangePasswordException;
 
-/**
- * Class Client
- */
 class Client
 {
     use AuthenticatesUsers, HandlesGlobalEasyFlexData, HandlesRelationData, HandlesEmployeeData;
 
-    /**
-     * @var string
-     */
     public const EMPLOYEE = 'flexwerker';
 
-    /**
-     * @var string
-     */
     public const RELATION = 'relatie';
 
-    /**
-     * @var string
-     */
-    protected $wsdl = 'https://www.easyflex.net/webservice/tools/wsdl.tpsp';
+    protected string $wsdl = 'https://www.easyflex.net/webservice/tools/wsdl.tpsp';
 
-    /**
-     * @var \SoapClient
-     */
-    protected $soapClient;
+    protected ?SoapClient $soapClient;
 
-    /**
-     * @var string
-     */
-    protected $license = '';
+    protected string $license;
 
-    /**
-     * @var string
-     */
-    protected $session = '';
+    protected ?string $session;
 
-    /**
-     * @var string
-     */
-    protected $request;
+    protected ?string $request;
 
-    /**
-     * @var \TheCodeConnectors\EasyFlex\EasyFlex\Response
-     */
-    protected $response;
+    protected Response $response;
 
-    /**
-     * @param string           $license
-     * @param \SoapClient|null $soapClient
-     */
-    public function __construct($license = '', SoapClient $soapClient = null)
+    public function __construct(string $license = '', SoapClient $soapClient = null)
     {
-        $this->license    = $license;
+        $this->license = $license;
         $this->soapClient = $soapClient;
-        $this->response   = new Response();
+        $this->response = new Response();
+        $this->session = null;
     }
 
-    /**
-     * @param string $wsdl
-     *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Client
-     */
     public function setWsdl(string $wsdl): Client
     {
         $this->wsdl = $wsdl;
@@ -89,19 +54,11 @@ class Client
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getWsdl(): string
     {
         return $this->wsdl;
     }
 
-    /**
-     * @param string $license
-     *
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Client
-     */
     public function setLicense(string $license): Client
     {
         $this->license = $license;
@@ -109,72 +66,43 @@ class Client
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLicense(): string
     {
         return $this->license;
     }
 
-    /**
-     * @param $session
-     *
-     * @return string
-     */
     public function setSession($session): string
     {
         return $this->session = $session;
     }
 
-    /**
-     * @return string
-     */
-    public function getSession(): string
+    public function getSession(): ?string
     {
         return $this->response->session();
     }
 
-    /**
-     * @return string
-     */
     public function getRequest(): string
     {
         return $this->request;
     }
 
-    /**
-     * @return \TheCodeConnectors\EasyFlex\EasyFlex\Response
-     */
-    public function getResponse()
+    public function getResponse(): ?Response
     {
         return $this->response;
     }
 
-    /**
-     * @param       $method
-     * @param array $parameters
-     * @param array $fields
-     *
-     * @return $this
-     */
-    public function call($method, $parameters = [], $fields = [])
+    public function call(string $method, array $parameters = [], array $fields = []): self
     {
-        // init the old school soap client
         $client = $this->soapClient();
 
         try {
 
-            // construct the complete payload we need to send
             $payload = [$method => $this->constructPayload($method, $parameters, $fields)];
 
-            // call the soap service and set the response
             $this->response = new Response($client->__soapCall($method, $payload), $this);
 
-            // if we get a new session from the response, store it to the cient
             $this->session = $this->response->session() ?: $this->session;
 
-            // set the soap request we passed for easier debugging
             $this->request = $client->__getLastRequest();
 
             $this->checkChangePasswordRequirement('', $parameters);
@@ -194,10 +122,7 @@ class Client
         return $this;
     }
 
-    /**
-     * @return \SoapClient|\TheCodeConnectors\EasyFlex\Tests\Mock\SoapClient
-     */
-    public function soapClient()
+    public function soapClient(): SoapClient
     {
         if ( ! $this->soapClient) {
             $this->soapClient = new SoapClient($this->getWsdl()); // , ['trace' => 1]
@@ -206,21 +131,14 @@ class Client
         return $this->soapClient;
     }
 
-    /**
-     * @param       $method
-     * @param array $parameters
-     * @param array $fields
-     *
-     * @return array
-     */
-    public function constructPayload($method, $parameters = [], $fields = []): array
+    public function constructPayload(string $method, array $parameters = [], array $fields = []): array
     {
         $fields = array_fill_keys($fields, '');
 
         if ($this->session && $method === 'wm_inloggen_update') {
             // stupid exception of adding the session parameter
             $parameters['session'] = $this->session;
-            $fields                = array_filter($fields);
+            $fields = array_filter($fields);
         } else {
             foreach ($fields as $k => $v) {
                 if ($v === null) {
@@ -247,10 +165,6 @@ class Client
         return $payload;
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     */
     protected function handleSoapFault(SoapFault $fault, array $parameters = []): void
     {
         $this->checkServiceOffline($fault, $parameters);
@@ -259,9 +173,9 @@ class Client
         $this->checkInvalidParameter($fault, $parameters);
         $this->checkUserLockedOut($fault, $parameters);
 
-        $code    = $fault->faultstring;
+        $code = $fault->faultstring;
         $message = (isset($fault->detail, $fault->detail->message)) ? $fault->detail->message : '';
-        $detail  = (isset($fault->detail, $fault->detail->detail)) ? $fault->detail->detail : '';
+        $detail = (isset($fault->detail, $fault->detail->detail)) ? $fault->detail->detail : '';
 
         // weird message when user need to change
         // their password is hidden in $detail
@@ -275,37 +189,24 @@ class Client
 
         // we were not able to present a usefull message,
         // so pass throw whatever we got from Easyflex.
-
         throw new EasyFlexException($code, $message, $detail ?? $code);
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     */
-    protected function checkServiceOffline(SoapFault $fault, $parameters = []): void
+    protected function checkServiceOffline(SoapFault $fault, array $parameters = []): void
     {
         if (strpos($fault->faultstring, "Start tag expected") !== false) {
             throw new WebserviceOfflineException("The webservice is offline");
         }
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     */
-    public function checkLicenseError(SoapFault $fault, $parameters = []): void
+    protected function checkLicenseError(SoapFault $fault, array $parameters = []): void
     {
         if (strpos($fault->faultstring, " object has no 'license' property") !== false) {
             throw new MissingLicenseException((string)$fault->faultstring);
         }
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     */
-    public function checkSessionError(SoapFault $fault, $parameters = []): void
+    protected function checkSessionError(SoapFault $fault, array $parameters = []): void
     {
         if (strpos($fault->faultstring, '39053') !== false) {
             throw new SessionExpiredException((string)$fault->faultstring);
@@ -316,13 +217,7 @@ class Client
         }
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     *
-     * @throws \TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\InvalidParameterException
-     */
-    protected function checkInvalidParameter(SoapFault $fault, $parameters = []): void
+    protected function checkInvalidParameter(SoapFault $fault, array $parameters = []): void
     {
         if (strpos($fault->faultstring, '39043') !== false) {
             if ($fault->detail->detail === 'duplicate username') {
@@ -333,11 +228,7 @@ class Client
         }
     }
 
-    /**
-     * @param \SoapFault $fault
-     * @param array      $parameters
-     */
-    protected function checkUserLockedOut(SoapFault $fault, $parameters = []): void
+    protected function checkUserLockedOut(SoapFault $fault, array $parameters = []): void
     {
         $blockedAccountCodes = [
             39021,
@@ -357,13 +248,9 @@ class Client
         }
     }
 
-    /**
-     * @param       $detail
-     * @param array $parameters
-     */
-    protected function checkChangePasswordRequirement($detail, $parameters = []): void
+    protected function checkChangePasswordRequirement($detail = '', $parameters = []): void
     {
-        if ($detail === 'change password' || substr($parameters['db_inlognaam'] ?? '', 0, 3) === 'EF_') {
+        if ($detail === 'change password' || strpos($parameters['db_inlognaam'] ?? '', 'EF_') === 0) {
             $exception = new RequireChangePasswordException();
 
             $exception->setParameters($parameters);

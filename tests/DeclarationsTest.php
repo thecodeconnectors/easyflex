@@ -3,6 +3,7 @@
 namespace TheCodeConnectors\EasyFlex\Tests;
 
 use TheCodeConnectors\EasyFlex\EasyFlex\Models\Declaration;
+use TheCodeConnectors\EasyFlex\EasyFlex\Models\EasyFlexCollection;
 
 class DeclarationsTest extends EasyFlexSoapClientTest
 {
@@ -21,40 +22,11 @@ class DeclarationsTest extends EasyFlexSoapClientTest
         $this->assertEquals(['rf_decl_idnrs' => [123, 456]], $builder->parameters());
     }
 
-    public function test_it_returns_a_declaration_object()
+    public function test_it_returns_a_declaration_collection_object()
     {
         $declaration = Declaration::select()->setClient($this->client)->get(123);
 
-        $this->assertInstanceOf(Declaration::class, $declaration);
-    }
-
-    public function test_it_gets_a_declaration_by_id()
-    {
-        $mock = \Mockery::mock($this->client);
-
-        $mock->shouldReceive('declarations')
-            ->andReturn(new Declaration(['rf_decl_idnr' => 123]));
-
-        $declaration = Declaration::select()->setClient($mock)->get(123);
-
-        $this->assertEquals(123, $declaration->rf_decl_idnr);
-    }
-
-    public function test_it_gets_a_declaration_by_id_authenticated()
-    {
-        // Authenticate user
-        $this->client->soapClient()->setMockedResponse(file_get_contents(__DIR__ . '/responses/login.xml'));
-        $client = $this->client->authenticate('username', 'password', 'relatie');
-        $this->assertEquals('veryrandomsessionstring', $client->getSession());
-
-        // Make authenticated call
-        $mock = \Mockery::mock($client)->makePartial();
-        $mock->shouldReceive('declarations')->andReturn((new Declaration(['rf_decl_idnr' => 123]))->setClient($mock));
-
-        $declaration = Declaration::select()->setClient($mock)->get(123);
-
-        $this->assertEquals('veryrandomsessionstring', $declaration->client()->getSession());
-        $this->assertEquals(123, $declaration->rf_decl_idnr);
+        $this->assertInstanceOf(EasyFlexCollection::class, $declaration);
     }
 
 }
