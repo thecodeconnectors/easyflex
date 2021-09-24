@@ -33,7 +33,7 @@ trait TransfersFieldsToEasyFlexFields
         $instance = new static;
         $fields   = $instance->fields();
 
-        static::ensureAllAttributesHasFields(array_keys($attributes), $fields);
+        //static::ensureAllAttributesHasFields(array_keys($attributes), $fields);
 
         foreach ($attributes as $key => $value) {
             $key = array_search($key, $fields, true);
@@ -53,7 +53,7 @@ trait TransfersFieldsToEasyFlexFields
         $instance = new static;
         $fields   = $instance->fields();
 
-        static::ensureAllAttributesHasFields(array_keys($attributes), $fields);
+        //static::ensureAllAttributesHasFields(array_keys($attributes), $fields);
 
         foreach ($attributes as $key => $value) {
             $key = $fields[$key];
