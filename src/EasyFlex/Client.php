@@ -9,6 +9,7 @@ use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\AuthenticatesUsers;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\EasyFlexException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesRelationData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesEmployeeData;
+use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\ServiceTemporarilyUnavailableException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\UserLockedOutException;
 use TheCodeConnectors\EasyFlex\EasyFlex\Concerns\HandlesGlobalEasyFlexData;
 use TheCodeConnectors\EasyFlex\EasyFlex\Exceptions\MissingLicenseException;
@@ -168,6 +169,7 @@ class Client
     protected function handleSoapFault(SoapFault $fault, array $parameters = []): void
     {
         $this->checkServiceOffline($fault, $parameters);
+        $this->checkServiceTemporarilyUnavailable($fault, $parameters);
         $this->checkLicenseError($fault, $parameters);
         $this->checkSessionError($fault, $parameters);
         $this->checkInvalidParameter($fault, $parameters);
@@ -190,6 +192,17 @@ class Client
         // we were not able to present a usefull message,
         // so pass throw whatever we got from Easyflex.
         throw new EasyFlexException($code, $message, $detail ?? $code);
+    }
+
+    protected function checkServiceTemporarilyUnavailable(SoapFault $fault, array $parameters = []): void
+    {
+        $checkError = "Service Temporarily Unavailable";
+        if (strpos($fault->faultstring, $checkError) !== false
+            || ($fault->detail && strpos($fault->detail->detail, $checkError) !== false)
+            || ($fault->detail && strpos($fault->detail->message, $checkError) !== false)
+        ) {
+            throw new ServiceTemporarilyUnavailableException($checkError);
+        }
     }
 
     protected function checkServiceOffline(SoapFault $fault, array $parameters = []): void
