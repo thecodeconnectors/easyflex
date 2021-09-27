@@ -197,11 +197,17 @@ class Client
     protected function checkServiceTemporarilyUnavailable(SoapFault $fault, array $parameters = []): void
     {
         $checkError = "Service Temporarily Unavailable";
-        if (strpos($fault->faultstring, $checkError) !== false
-            || (($fault->detail ?? null) && strpos($fault->detail->detail, $checkError) !== false)
-            || (($fault->detail ?? null) && strpos($fault->detail->message, $checkError) !== false)
-        ) {
+        if (strpos($fault->faultstring, $checkError) !== false) {
             throw new ServiceTemporarilyUnavailableException($checkError);
+        }
+
+        if(isset($fault->detail)) {
+            if(strpos($fault->detail->detail ?? '', $checkError) !== false) {
+                throw new ServiceTemporarilyUnavailableException($checkError);
+            }
+            if(strpos($fault->detail->message ?? '', $checkError) !== false) {
+                throw new ServiceTemporarilyUnavailableException($checkError);
+            }
         }
     }
 
