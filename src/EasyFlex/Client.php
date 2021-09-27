@@ -198,8 +198,8 @@ class Client
     {
         $checkError = "Service Temporarily Unavailable";
         if (strpos($fault->faultstring, $checkError) !== false
-            || ($fault->detail && strpos($fault->detail->detail, $checkError) !== false)
-            || ($fault->detail && strpos($fault->detail->message, $checkError) !== false)
+            || (($fault->detail ?? null) && strpos($fault->detail->detail, $checkError) !== false)
+            || (($fault->detail ?? null) && strpos($fault->detail->message, $checkError) !== false)
         ) {
             throw new ServiceTemporarilyUnavailableException($checkError);
         }
