@@ -157,7 +157,7 @@ class Client
             'fields'     => $fields ?: null,
         ];
 
-        if ($this->session && $method !== 'wm_inloggen_update') {
+        if ($this->session && $method !== 'wm_inloggen_update' && $method !== 'wm_inloggen_verify') {
             // only add the session if we have one,
             // otherwise we get a invalid session error, when authenticating
             $payload['session'] = $this->session;
