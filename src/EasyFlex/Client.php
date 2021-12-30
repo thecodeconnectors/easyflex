@@ -106,8 +106,6 @@ class Client
 
             $this->request = $client->__getLastRequest();
 
-            $this->checkChangePasswordRequirement('', $parameters);
-
         } catch (SoapFault $fault) {
 
             // we tried, but failed
